@@ -1,0 +1,3 @@
+useDynLib(blaster, .registration=TRUE)
+exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)

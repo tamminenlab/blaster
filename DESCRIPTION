@@ -1,0 +1,12 @@
+Package: blaster
+Type: Package
+Title: Native R implementation of an efficient BLAST algorithm
+Version: 0.1
+Date: 2021-01-03
+Author: Steven Schmid, Manu Tamminen
+Maintainer: Manu Tamminen <mavatam@utu.fi>
+Description: Blaster implements an efficient BLAST-like sequence 
+             comparison algorithm which uses native R datatypes.
+License: GPL (>= 2)
+Imports: Rcpp (>= 1.0.5)
+LinkingTo: Rcpp
