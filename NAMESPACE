@@ -1,3 +1,5 @@
 useDynLib(blaster, .registration=TRUE)
 exportPattern("^[[:alpha:]]+")
+export(read_fasta)
+export(filter_fasta)
 importFrom(Rcpp, evalCpp)

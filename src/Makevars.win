@@ -1,4 +1,0 @@
-# Makevars.win is used by Windows only.
-
-# Register where the header files for the package can be found
-PKG_CXXFLAGS=-I../inst/include/

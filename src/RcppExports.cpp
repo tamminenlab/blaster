@@ -6,15 +6,15 @@
 using namespace Rcpp;
 
 // filter_fasta
-DataFrame filter_fasta(std::string filename, std::string split_sequence, bool keep_ids);
-RcppExport SEXP _blaster_filter_fasta(SEXP filenameSEXP, SEXP split_sequenceSEXP, SEXP keep_idsSEXP) {
+DataFrame filter_fasta(std::string filename, std::string filter_criterion, bool split);
+RcppExport SEXP _blaster_filter_fasta(SEXP filenameSEXP, SEXP filter_criterionSEXP, SEXP splitSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
-    Rcpp::traits::input_parameter< std::string >::type split_sequence(split_sequenceSEXP);
-    Rcpp::traits::input_parameter< bool >::type keep_ids(keep_idsSEXP);
-    rcpp_result_gen = Rcpp::wrap(filter_fasta(filename, split_sequence, keep_ids));
+    Rcpp::traits::input_parameter< std::string >::type filter_criterion(filter_criterionSEXP);
+    Rcpp::traits::input_parameter< bool >::type split(splitSEXP);
+    rcpp_result_gen = Rcpp::wrap(filter_fasta(filename, filter_criterion, split));
     return rcpp_result_gen;
 END_RCPP
 }

@@ -1,4 +1,3 @@
-
 #include <Rcpp.h>
 #include <string>
 
@@ -10,8 +9,8 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 DataFrame filter_fasta(std::string filename,
-                           std::string split_sequence,
-                           bool keep_ids = true) 
+                       std::string filter_criterion,
+                       bool split = true) 
 {
   auto dbReader = DetectFileFormatAndOpenReader< DNA >( filename, FileFormat::FASTA );
 
@@ -23,35 +22,48 @@ DataFrame filter_fasta(std::string filename,
     sequences.push_back( std::move( seq ) );
   }
 
-  std::vector< std::string > ids;
-  std::vector< std::string > seqs;
-  std::vector< std::string > bcs;
-  std::vector< std::string > ribos;
-  int counter{1};
+  if (split) {
+    std::vector< std::string > ids;
+    std::vector< std::string > seqs;
+    std::vector< std::string > bcs;
+    std::vector< std::string > ribos;
 
-  for (Sequence< DNA > i : sequences) {
+    for (Sequence< DNA > i : sequences) {
 
-    std::string seq{i.sequence};
+      std::string seq{i.sequence};
     
-    if (seq.find(split_sequence) != std::string::npos) {
+      if (seq.find(filter_criterion) != std::string::npos) {
 
-      std::string bc{seq.substr(0, seq.find(split_sequence))};
-      std::string ribo{seq.substr(seq.find(split_sequence) + split_sequence.size(), seq.size())};
+        std::string bc{seq.substr(0, seq.find(filter_criterion))};
+        std::string ribo{seq.substr(seq.find(filter_criterion) + filter_criterion.size(), seq.size())};
 
-      ids.push_back(id);
-      seqs.push_back(seq);
-      bcs.push_back(bc);
-      ribos.push_back(ribo);
+        ids.push_back(i.identifier);
+        bcs.push_back(bc);
+        ribos.push_back(ribo);
+      }
     }
+
+    return DataFrame::create(Named("Id") = ids,
+                             Named("Part1") = bcs,
+                             Named("Part2") = ribos);
   }
+  else
+    {
+    
+      std::vector< std::string > ids;
+      std::vector< std::string > seqs;
 
-  // CharacterVector z;
-  // z = seqs;
+      for (Sequence< DNA > i : sequences) {
 
-  z = DataFrame.create(Named("Id") = ids,
-                       Named("BC") = bcs,
-                       Named("Ribo") = ribos,
-                       Named("Sequence") = seqs);
+        std::string seq{i.sequence};
+    
+        if (seq.find(filter_criterion) != std::string::npos) {
+          ids.push_back(i.identifier);
+          seqs.push_back(seq);
+        }
+      }
 
-  return z;
+      return DataFrame::create(Named("Id") = ids,
+                               Named("Seq") = seqs);
+    }
 }
