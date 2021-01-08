@@ -1,0 +1,4 @@
+# Makevars is used by unix-alike systems (Mac, Linux)
+
+# Register where the header files for the package can be found
+PKG_CXXFLAGS=-I../inst/include/

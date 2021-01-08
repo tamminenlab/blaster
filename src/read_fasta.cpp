@@ -15,6 +15,7 @@ CharacterVector read_fasta(std::string filename, bool keep_ids = true)
 
   Sequence< DNA > seq;
   SequenceList< DNA > sequences;
+
   while( !(dbReader->EndOfFile()) ) {
     (*dbReader) >> seq;
     sequences.push_back( std::move( seq ) );
