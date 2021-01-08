@@ -8,7 +8,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-CharacterVector read_fasta(std::string filename, bool keep_ids = true) 
+DataFrame read_fasta(std::string filename, bool keep_ids = true) 
 {
   auto dbReader = DetectFileFormatAndOpenReader< DNA >( filename, FileFormat::FASTA );
 
@@ -27,10 +27,8 @@ CharacterVector read_fasta(std::string filename, bool keep_ids = true)
     seqs.push_back( i.sequence );
       }
 
-  CharacterVector z;
-  z = seqs;
+  if (keep_ids) return DataFrame::create(Named("Id") = ids,
+                           Named("Seq") = seqs);
 
-  if (keep_ids) z.names() = ids;
-  
-  return z;
+  return DataFrame::create(Named("Seq") = seqs);
 }

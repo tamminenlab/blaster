@@ -9,7 +9,7 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 DataFrame filter_fasta(std::string filename,
-                       std::string filter_criterion,
+                       std::string by,
                        bool split = true) 
 {
   auto dbReader = DetectFileFormatAndOpenReader< DNA >( filename, FileFormat::FASTA );
@@ -32,10 +32,11 @@ DataFrame filter_fasta(std::string filename,
 
       std::string seq{i.sequence};
     
-      if (seq.find(filter_criterion) != std::string::npos) {
+      if (seq.find(by) != std::string::npos) {
 
-        std::string bc{seq.substr(0, seq.find(filter_criterion))};
-        std::string ribo{seq.substr(seq.find(filter_criterion) + filter_criterion.size(), seq.size())};
+        std::string bc{seq.substr(0, seq.find(by))};
+        std::string ribo{seq.substr(seq.find(by) + by.size(),
+                                    seq.size())};
 
         ids.push_back(i.identifier);
         bcs.push_back(bc);
@@ -57,7 +58,7 @@ DataFrame filter_fasta(std::string filename,
 
         std::string seq{i.sequence};
     
-        if (seq.find(filter_criterion) != std::string::npos) {
+        if (seq.find(by) != std::string::npos) {
           ids.push_back(i.identifier);
           seqs.push_back(seq);
         }
