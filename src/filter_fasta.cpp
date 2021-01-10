@@ -12,7 +12,7 @@ DataFrame filter_fasta(std::string filename,
                        std::string by,
                        bool split = true) 
 {
-  auto dbReader = DetectFileFormatAndOpenReader< DNA >( filename, FileFormat::FASTA );
+  std::unique_ptr< SequenceReader< DNA > > dbReader( new FASTA::Reader< DNA >( filename ) );
 
   Sequence< DNA > seq;
   SequenceList< DNA > sequences;
@@ -24,7 +24,6 @@ DataFrame filter_fasta(std::string filename,
 
   if (split) {
     std::vector< std::string > ids;
-    std::vector< std::string > seqs;
     std::vector< std::string > bcs;
     std::vector< std::string > ribos;
 

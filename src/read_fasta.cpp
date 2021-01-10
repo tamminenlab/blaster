@@ -8,9 +8,9 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-DataFrame read_fasta(std::string filename, bool keep_ids = true) 
+DataFrame read_fasta(std::string filename) 
 {
-  auto dbReader = DetectFileFormatAndOpenReader< DNA >( filename, FileFormat::FASTA );
+  std::unique_ptr< SequenceReader< DNA > > dbReader( new FASTA::Reader< DNA >( filename ) );
 
   Sequence< DNA > seq;
   SequenceList< DNA > sequences;
@@ -27,8 +27,6 @@ DataFrame read_fasta(std::string filename, bool keep_ids = true)
     seqs.push_back( i.sequence );
       }
 
-  if (keep_ids) return DataFrame::create(Named("Id") = ids,
+  return DataFrame::create(Named("Id") = ids,
                            Named("Seq") = seqs);
-
-  return DataFrame::create(Named("Seq") = seqs);
 }
