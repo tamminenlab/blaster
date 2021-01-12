@@ -111,13 +111,10 @@ struct WordSize< Protein > {
   static const int VALUE = 5;
 };
 
-// [[Rcpp::export]]
-
-DataFrame blast(DataFrame seq_table) 
+std::string DFtoSeq(DataFrame seq_table)
 {
   std::vector< std::string > ids = seq_table["Id"];
   std::vector< std::string > seqs = seq_table["Seq"];
-
   
   std::stringstream content;
 
@@ -126,12 +123,17 @@ DataFrame blast(DataFrame seq_table)
     std::string seq{seqs[i]};
     content << ">" << id << "\n" << seq << "\n";
   }
+  return content.str();
+}
 
-  std::string fasta_string( content.str() );
 
-  std::istringstream iss( fasta_string );
+// [[Rcpp::export]]
 
-  std::unique_ptr< SequenceReader< DNA > > dbReader( new FASTA::Reader< DNA >( iss ) );
+void blast(DataFrame query_table, DataFrame db_table, std::string output_file) 
+{
+
+  std::istringstream db_stream( DFtoSeq(db_table) );
+  std::unique_ptr< SequenceReader< DNA > > dbReader( new FASTA::Reader< DNA >( db_stream ) );
   
   Sequence< DNA > seq;
   SequenceList< DNA > sequences;
@@ -194,7 +196,7 @@ DataFrame blast(DataFrame seq_table)
   
   SearchParams< DNA > searchParams;
 
-  SearchResultsWriter< DNA >   writer( 1, "koe.csv" );
+  SearchResultsWriter< DNA >   writer( 1, output_file );
   QueryDatabaseSearcher< DNA > searcher( -1, &writer, &db, searchParams );
 
   searcher.OnProcessed( [&]( size_t numProcessed, size_t numEnqueued ) {
@@ -204,8 +206,8 @@ DataFrame blast(DataFrame seq_table)
                         progress.Set( ProgressType::WriteHits, numProcessed, numEnqueued );
                       } );
 
-  std::istringstream iss2( fasta_string );
-  std::unique_ptr< SequenceReader< DNA > > qryReader( new FASTA::Reader< DNA >( iss2 ) );
+  std::istringstream query_stream( DFtoSeq(query_table) );
+  std::unique_ptr< SequenceReader< DNA > > qryReader( new FASTA::Reader< DNA >( query_stream ) );
 
   SequenceList< DNA > queries;
   progress.Activate( ProgressType::ReadQueryFile );
@@ -223,6 +225,5 @@ DataFrame blast(DataFrame seq_table)
   progress.Activate( ProgressType::WriteHits );
   writer.WaitTillDone();
 
-  return DataFrame::create(Named("Id") = ids,
-                           Named("Seq") = seqs);
+  Rcout << "\n";
 }

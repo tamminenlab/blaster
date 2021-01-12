@@ -6,14 +6,15 @@
 using namespace Rcpp;
 
 // blast
-DataFrame blast(DataFrame seq_table);
-RcppExport SEXP _blaster_blast(SEXP seq_tableSEXP) {
+void blast(DataFrame query_table, DataFrame db_table, std::string output_file);
+RcppExport SEXP _blaster_blast(SEXP query_tableSEXP, SEXP db_tableSEXP, SEXP output_fileSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< DataFrame >::type seq_table(seq_tableSEXP);
-    rcpp_result_gen = Rcpp::wrap(blast(seq_table));
-    return rcpp_result_gen;
+    Rcpp::traits::input_parameter< DataFrame >::type query_table(query_tableSEXP);
+    Rcpp::traits::input_parameter< DataFrame >::type db_table(db_tableSEXP);
+    Rcpp::traits::input_parameter< std::string >::type output_file(output_fileSEXP);
+    blast(query_table, db_table, output_file);
+    return R_NilValue;
 END_RCPP
 }
 // filter_fasta
@@ -42,7 +43,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_blaster_blast", (DL_FUNC) &_blaster_blast, 1},
+    {"_blaster_blast", (DL_FUNC) &_blaster_blast, 3},
     {"_blaster_filter_fasta", (DL_FUNC) &_blaster_filter_fasta, 3},
     {"_blaster_read_fasta", (DL_FUNC) &_blaster_read_fasta, 1},
     {NULL, NULL, 0}
