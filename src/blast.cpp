@@ -126,10 +126,14 @@ std::string DFtoSeq(DataFrame seq_table)
   return content.str();
 }
 
-
 // [[Rcpp::export]]
 
-void blast(DataFrame query_table, DataFrame db_table, std::string output_file) 
+void blast(DataFrame query_table,
+           DataFrame db_table,
+           std::string output_file,
+           int maxAccepts = 1,
+           int maxRejects =  16,
+           float minIdentity = 0.75) 
 {
 
   std::istringstream db_stream( DFtoSeq(db_table) );
@@ -196,6 +200,10 @@ void blast(DataFrame query_table, DataFrame db_table, std::string output_file)
   
   SearchParams< DNA > searchParams;
 
+  searchParams.maxAccepts = maxAccepts;
+  searchParams.maxRejects = maxRejects;
+  searchParams.minIdentity = minIdentity;
+
   SearchResultsWriter< DNA >   writer( 1, output_file );
   QueryDatabaseSearcher< DNA > searcher( -1, &writer, &db, searchParams );
 
@@ -227,3 +235,4 @@ void blast(DataFrame query_table, DataFrame db_table, std::string output_file)
 
   Rcout << "\n";
 }
+
