@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // blast
-void blast(DataFrame query_table, DataFrame db_table, std::string output_file, int maxAccepts, int maxRejects, float minIdentity);
-RcppExport SEXP _blaster_blast(SEXP query_tableSEXP, SEXP db_tableSEXP, SEXP output_fileSEXP, SEXP maxAcceptsSEXP, SEXP maxRejectsSEXP, SEXP minIdentitySEXP) {
+void blast(DataFrame query_table, DataFrame db_table, std::string output_file, int maxAccepts, int maxRejects, float minIdentity, std::string strand);
+RcppExport SEXP _blaster_blast(SEXP query_tableSEXP, SEXP db_tableSEXP, SEXP output_fileSEXP, SEXP maxAcceptsSEXP, SEXP maxRejectsSEXP, SEXP minIdentitySEXP, SEXP strandSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type query_table(query_tableSEXP);
@@ -16,7 +16,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type maxAccepts(maxAcceptsSEXP);
     Rcpp::traits::input_parameter< int >::type maxRejects(maxRejectsSEXP);
     Rcpp::traits::input_parameter< float >::type minIdentity(minIdentitySEXP);
-    blast(query_table, db_table, output_file, maxAccepts, maxRejects, minIdentity);
+    Rcpp::traits::input_parameter< std::string >::type strand(strandSEXP);
+    blast(query_table, db_table, output_file, maxAccepts, maxRejects, minIdentity, strand);
     return R_NilValue;
 END_RCPP
 }
@@ -46,7 +47,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_blaster_blast", (DL_FUNC) &_blaster_blast, 6},
+    {"_blaster_blast", (DL_FUNC) &_blaster_blast, 7},
     {"_blaster_filter_fasta", (DL_FUNC) &_blaster_filter_fasta, 3},
     {"_blaster_read_fasta", (DL_FUNC) &_blaster_read_fasta, 1},
     {NULL, NULL, 0}

@@ -133,7 +133,8 @@ void blast(DataFrame query_table,
            std::string output_file,
            int maxAccepts = 1,
            int maxRejects =  16,
-           float minIdentity = 0.75) 
+           float minIdentity = 0.75,
+           std::string strand = "both") 
 {
 
   std::istringstream db_stream( DFtoSeq(db_table) );
@@ -203,6 +204,11 @@ void blast(DataFrame query_table,
   searchParams.maxAccepts = maxAccepts;
   searchParams.maxRejects = maxRejects;
   searchParams.minIdentity = minIdentity;
+
+  if (strand == "both") searchParams.strand = DNA::Strand::Both;
+  else if (strand == "plus") searchParams.strand = DNA::Strand::Plus;
+  else if (strand == "minus") searchParams.strand = DNA::Strand::Minus;
+  else stop("Strand must be 'plus', 'minus' or 'both'.");
 
   SearchResultsWriter< DNA >   writer( 1, output_file );
   QueryDatabaseSearcher< DNA > searcher( -1, &writer, &db, searchParams );

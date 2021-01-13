@@ -10,3 +10,4 @@ Description: Blaster implements an efficient BLAST-like sequence
 License: GPL (>= 2)
 Imports: Rcpp (>= 1.0.5)
 LinkingTo: Rcpp
+SystemRequirements: C++11
