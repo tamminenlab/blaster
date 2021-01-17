@@ -21,6 +21,41 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// create_sequence_chunks
+DataFrame create_sequence_chunks(DataFrame seq_table, int window_size);
+RcppExport SEXP _blaster_create_sequence_chunks(SEXP seq_tableSEXP, SEXP window_sizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< DataFrame >::type seq_table(seq_tableSEXP);
+    Rcpp::traits::input_parameter< int >::type window_size(window_sizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(create_sequence_chunks(seq_table, window_size));
+    return rcpp_result_gen;
+END_RCPP
+}
+// make_degenerate_sequence
+StringVector make_degenerate_sequence(StringVector sequences, double cutoff);
+RcppExport SEXP _blaster_make_degenerate_sequence(SEXP sequencesSEXP, SEXP cutoffSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< StringVector >::type sequences(sequencesSEXP);
+    Rcpp::traits::input_parameter< double >::type cutoff(cutoffSEXP);
+    rcpp_result_gen = Rcpp::wrap(make_degenerate_sequence(sequences, cutoff));
+    return rcpp_result_gen;
+END_RCPP
+}
+// process_blast_table
+List process_blast_table(std::string filename);
+RcppExport SEXP _blaster_process_blast_table(SEXP filenameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
+    rcpp_result_gen = Rcpp::wrap(process_blast_table(filename));
+    return rcpp_result_gen;
+END_RCPP
+}
 // read_fasta
 DataFrame read_fasta(std::string filename, std::string id_split_string, std::string filter);
 RcppExport SEXP _blaster_read_fasta(SEXP filenameSEXP, SEXP id_split_stringSEXP, SEXP filterSEXP) {
@@ -37,6 +72,9 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_blaster_blast", (DL_FUNC) &_blaster_blast, 7},
+    {"_blaster_create_sequence_chunks", (DL_FUNC) &_blaster_create_sequence_chunks, 2},
+    {"_blaster_make_degenerate_sequence", (DL_FUNC) &_blaster_make_degenerate_sequence, 2},
+    {"_blaster_process_blast_table", (DL_FUNC) &_blaster_process_blast_table, 1},
     {"_blaster_read_fasta", (DL_FUNC) &_blaster_read_fasta, 3},
     {NULL, NULL, 0}
 };

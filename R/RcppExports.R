@@ -5,6 +5,18 @@ blast <- function(query_table, db_table, output_file, maxAccepts = 1L, maxReject
     invisible(.Call(`_blaster_blast`, query_table, db_table, output_file, maxAccepts, maxRejects, minIdentity, strand))
 }
 
+create_sequence_chunks <- function(seq_table, window_size = 20L) {
+    .Call(`_blaster_create_sequence_chunks`, seq_table, window_size)
+}
+
+make_degenerate_sequence <- function(sequences, cutoff = 0.1) {
+    .Call(`_blaster_make_degenerate_sequence`, sequences, cutoff)
+}
+
+process_blast_table <- function(filename) {
+    .Call(`_blaster_process_blast_table`, filename)
+}
+
 read_fasta <- function(filename, id_split_string = "", filter = "") {
     .Call(`_blaster_read_fasta`, filename, id_split_string, filter)
 }
