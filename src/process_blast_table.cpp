@@ -11,59 +11,88 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-List process_blast_table(std::string filename) 
+List process_blast_table(std::string filename, int hit_len) 
 {
-  std::fstream testFile(filename);    
+  std::fstream csv_file(filename);    
   std::string line;
-  std::vector< std::string > split_line;
-  std::vector< std::string > split_query;
+
   std::set< std::string > primer_set;
   std::set< std::string > seq_set;
 
-  while(getline(testFile, line)){
-    split_line = split(line, ",");
-    std::string target{split_line[1] + "_" + split_line[4]};
-    std::string new_primer_item{split_line[0] + "," + target};
-    if (split_line[0] != target)
-      primer_set.insert(new_primer_item);
+  std::getline(csv_file, line);
 
-    split_query = split(split_line[0], "_");
-    std::string new_seq_item{split_query[0] + "," + split_line[1]};
-    if (split_query[0] != split_line[1])
-      seq_set.insert(new_seq_item);
+  while(std::getline(csv_file, line)){
+
+    std::istringstream s(line);
+    std::string field;
+
+    std::string QueryId;
+    std::string TargetId;
+    int TargetMatchStart;
+    int TargetMatchEnd;
+
+    int ix { 0 };
+    while (getline(s, field, ',')) {
+      switch (ix)
+        {
+        case 0:
+          QueryId = field;
+          break;
+        case 1:
+          TargetId = field;
+          break;
+        case 4:
+          TargetMatchStart = std::stoi(field);
+          break;
+        case 5:
+          TargetMatchEnd = std::stoi(field);
+          break;
+        }
+      ++ix;
+    }
+
+  int hit_len = TargetMatchEnd - TargetMatchStart;
+  std::cout << hit_len << "\n";
+
+  std::string TruncQueryId { QueryId.substr(0, QueryId.find("_")) };
+  std::string primer_pair { TruncQueryId + "," + TargetId };
+  if (TruncQueryId != TargetId && hit_len == 39)
+      primer_set.insert(primer_pair);
+
+  std::string LongTargetId { TargetId + "_" + std::to_string(TargetMatchStart) };
+  std::string seq_pair { QueryId + "," + LongTargetId };
+  if (QueryId != LongTargetId && hit_len == 39)
+      seq_set.insert(seq_pair);
+    
   }
   
-  std::set< std::string >::iterator primer_it = --primer_set.end();
-  primer_set.erase(primer_it); 
+  std::vector < std::string > left_primers;
+  std::vector < std::string > right_primers;
 
-  std::vector < std::string > primer_left;
-  std::vector < std::string > primer_right;
+  for (std::string pair : primer_set)
+    {
+      std::string left_primer { pair.substr(0, pair.find(",")) };
+      std::string right_primer { pair.substr(pair.find(","), pair.size()) };
+      left_primers.push_back(left_primer);
+      right_primers.push_back(right_primer);
+    }
 
-  for (std::set< std::string >::iterator primer_it = primer_set.begin(); primer_it != primer_set.end(); ++primer_it) {
-    line = *primer_it;
-    split_line = split(line, ",");
-    primer_left.push_back(split_line[0]);
-    primer_right.push_back(split_line[1]);
-  }
+  std::vector < std::string > left_seqs;
+  std::vector < std::string > right_seqs;
 
-  std::set< std::string >::iterator seq_it = --seq_set.end();
-  seq_set.erase(seq_it); 
-
-  std::vector < std::string > seq_left;
-  std::vector < std::string > seq_right;
-
-  for (std::set< std::string >::iterator seq_it = seq_set.begin(); seq_it != seq_set.end(); ++seq_it) {
-    line = *seq_it;
-    split_line = split(line, ",");
-    seq_left.push_back(split_line[0]);
-    seq_right.push_back(split_line[1]);
-  }
+  for (std::string pair : seq_set)
+    {
+      std::string left_seq { pair.substr(0, pair.find(",")) };
+      std::string right_seq { pair.substr(pair.find(","), pair.size()) };
+      left_seqs.push_back(left_seq);
+      right_seqs.push_back(right_seq);
+    }
   
-  DataFrame primer_table = DataFrame::create(Named("Left") = primer_left,
-                                             Named("Right") = primer_right);
+  DataFrame primer_table = DataFrame::create(Named("Left") = left_primers,
+                                             Named("Right") = right_primers);
 
-  DataFrame seq_table = DataFrame::create(Named("Left") = seq_left,
-                                          Named("Right") = seq_right);
+  DataFrame seq_table = DataFrame::create(Named("Left") = left_seqs,
+                                          Named("Right") = right_seqs);
 
   return List::create(primer_table, seq_table);
 

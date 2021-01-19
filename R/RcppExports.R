@@ -13,8 +13,8 @@ make_degenerate_sequence <- function(sequences, cutoff = 0.1) {
     .Call(`_blaster_make_degenerate_sequence`, sequences, cutoff)
 }
 
-process_blast_table <- function(filename) {
-    .Call(`_blaster_process_blast_table`, filename)
+process_blast_table <- function(filename, hit_len) {
+    .Call(`_blaster_process_blast_table`, filename, hit_len)
 }
 
 read_fasta <- function(filename, id_split_string = "", filter = "") {

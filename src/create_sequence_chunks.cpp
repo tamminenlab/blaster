@@ -53,7 +53,7 @@ DataFrame create_sequence_chunks(DataFrame seq_table,
     std::string seq_id = ids[inc1];
     for (int inc2 = 0 ; inc2 < seq_acc.size() ; ++inc2) {
       seq_chunk_acc.push_back(seq_acc[inc2]);
-      seq_id_acc.push_back(seq_id + "_" + std::to_string(inc2));
+      seq_id_acc.push_back(seq_id + "_" + std::to_string(inc2 + 1));
     }
   }
 

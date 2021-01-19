@@ -6,7 +6,7 @@
 using namespace Rcpp;
 
 // blast
-void blast(DataFrame query_table, DataFrame db_table, std::string output_file, int maxAccepts, int maxRejects, float minIdentity, std::string strand);
+void blast(DataFrame query_table, DataFrame db_table, std::string output_file, int maxAccepts, int maxRejects, double minIdentity, std::string strand);
 RcppExport SEXP _blaster_blast(SEXP query_tableSEXP, SEXP db_tableSEXP, SEXP output_fileSEXP, SEXP maxAcceptsSEXP, SEXP maxRejectsSEXP, SEXP minIdentitySEXP, SEXP strandSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -15,7 +15,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< std::string >::type output_file(output_fileSEXP);
     Rcpp::traits::input_parameter< int >::type maxAccepts(maxAcceptsSEXP);
     Rcpp::traits::input_parameter< int >::type maxRejects(maxRejectsSEXP);
-    Rcpp::traits::input_parameter< float >::type minIdentity(minIdentitySEXP);
+    Rcpp::traits::input_parameter< double >::type minIdentity(minIdentitySEXP);
     Rcpp::traits::input_parameter< std::string >::type strand(strandSEXP);
     blast(query_table, db_table, output_file, maxAccepts, maxRejects, minIdentity, strand);
     return R_NilValue;
@@ -46,13 +46,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // process_blast_table
-List process_blast_table(std::string filename);
-RcppExport SEXP _blaster_process_blast_table(SEXP filenameSEXP) {
+List process_blast_table(std::string filename, int hit_len);
+RcppExport SEXP _blaster_process_blast_table(SEXP filenameSEXP, SEXP hit_lenSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
-    rcpp_result_gen = Rcpp::wrap(process_blast_table(filename));
+    Rcpp::traits::input_parameter< int >::type hit_len(hit_lenSEXP);
+    rcpp_result_gen = Rcpp::wrap(process_blast_table(filename, hit_len));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -74,7 +75,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_blaster_blast", (DL_FUNC) &_blaster_blast, 7},
     {"_blaster_create_sequence_chunks", (DL_FUNC) &_blaster_create_sequence_chunks, 2},
     {"_blaster_make_degenerate_sequence", (DL_FUNC) &_blaster_make_degenerate_sequence, 2},
-    {"_blaster_process_blast_table", (DL_FUNC) &_blaster_process_blast_table, 1},
+    {"_blaster_process_blast_table", (DL_FUNC) &_blaster_process_blast_table, 2},
     {"_blaster_read_fasta", (DL_FUNC) &_blaster_read_fasta, 3},
     {NULL, NULL, 0}
 };

@@ -133,7 +133,7 @@ void blast(DataFrame query_table,
            std::string output_file,
            int maxAccepts = 1,
            int maxRejects =  16,
-           float minIdentity = 0.75,
+           double minIdentity = 0.75,
            std::string strand = "both") 
 {
 
