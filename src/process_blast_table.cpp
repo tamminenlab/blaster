@@ -52,7 +52,6 @@ List process_blast_table(std::string filename, int hit_len)
     }
 
   int hit_len = TargetMatchEnd - TargetMatchStart;
-  std::cout << hit_len << "\n";
 
   std::string TruncQueryId { QueryId.substr(0, QueryId.find("_")) };
   std::string primer_pair { TruncQueryId + "," + TargetId };
