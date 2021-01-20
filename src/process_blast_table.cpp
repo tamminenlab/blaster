@@ -51,17 +51,17 @@ List process_blast_table(std::string filename, int hit_len)
       ++ix;
     }
 
-  int hit_len = TargetMatchEnd - TargetMatchStart;
+  int obs_hit_len = TargetMatchEnd - TargetMatchStart;
 
   std::string TruncQueryId { QueryId.substr(0, QueryId.find("_")) };
-  std::string primer_pair { TruncQueryId + "," + TargetId };
-  if (TruncQueryId != TargetId && hit_len == 39)
-      primer_set.insert(primer_pair);
+  std::string seq_pair { TruncQueryId + "," + TargetId };
+  if (TruncQueryId != TargetId && hit_len == obs_hit_len)
+      seq_set.insert(seq_pair);
 
   std::string LongTargetId { TargetId + "_" + std::to_string(TargetMatchStart) };
-  std::string seq_pair { QueryId + "," + LongTargetId };
-  if (QueryId != LongTargetId && hit_len == 39)
-      seq_set.insert(seq_pair);
+  std::string primer_pair { QueryId + "," + LongTargetId };
+  if (QueryId != LongTargetId && hit_len == obs_hit_len)
+      primer_set.insert(primer_pair);
     
   }
   
@@ -71,7 +71,7 @@ List process_blast_table(std::string filename, int hit_len)
   for (std::string pair : primer_set)
     {
       std::string left_primer { pair.substr(0, pair.find(",")) };
-      std::string right_primer { pair.substr(pair.find(","), pair.size()) };
+      std::string right_primer { pair.substr(pair.find(",") + 1, pair.size()) };
       left_primers.push_back(left_primer);
       right_primers.push_back(right_primer);
     }
@@ -82,7 +82,7 @@ List process_blast_table(std::string filename, int hit_len)
   for (std::string pair : seq_set)
     {
       std::string left_seq { pair.substr(0, pair.find(",")) };
-      std::string right_seq { pair.substr(pair.find(","), pair.size()) };
+      std::string right_seq { pair.substr(pair.find(",") + 1, pair.size()) };
       left_seqs.push_back(left_seq);
       right_seqs.push_back(right_seq);
     }
