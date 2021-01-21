@@ -5,14 +5,21 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-StringVector make_degenerate_sequence(StringVector sequences, double cutoff = 0.1)
+StringVector make_degenerate_sequence(StringVector sequences,
+                                      int sequence_length,
+                                      double cutoff = 0.1)
 {
   std::vector< std::vector< char > > aln_matrix;
 
   for (int i = 0 ; i < sequences.size() ; ++i) {
-    std::vector<char> chars(sequences[i].begin(), sequences[i].end());
-    aln_matrix.push_back(chars);
+    if (sequences[i].size() == sequence_length ) {
+      std::vector<char> chars(sequences[i].begin(), sequences[i].end());
+      aln_matrix.push_back(chars);
+    }
   }
+
+  if (aln_matrix.size() == 0)
+    stop("Zero sequences of the specified length provided.");
 
   std::vector< std::vector< char> > trans_vec(aln_matrix[0].size(),
                                               std::vector< char >());

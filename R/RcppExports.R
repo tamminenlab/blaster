@@ -9,8 +9,8 @@ create_sequence_chunks <- function(seq_table, window_size = 20L) {
     .Call(`_blaster_create_sequence_chunks`, seq_table, window_size)
 }
 
-make_degenerate_sequence <- function(sequences, cutoff = 0.1) {
-    .Call(`_blaster_make_degenerate_sequence`, sequences, cutoff)
+make_degenerate_sequence <- function(sequences, sequence_length, cutoff = 0.1) {
+    .Call(`_blaster_make_degenerate_sequence`, sequences, sequence_length, cutoff)
 }
 
 process_blast_table <- function(filename, hit_len) {
