@@ -169,7 +169,7 @@ void blast(DataFrame query_table,
   // Read DB
   progress.Activate( ProgressType::ReadDBFile );
   while( !dbReader->EndOfFile() ) {
-    (*dbReader) >> seq;
+    ( *dbReader ) >> seq;
     sequences.push_back( std::move( seq ) );
     progress.Set( ProgressType::ReadDBFile, dbReader->NumBytesRead(),
                   dbReader->NumBytesTotal() );
