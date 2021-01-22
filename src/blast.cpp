@@ -143,8 +143,8 @@ void blast(DataFrame query_table,
   Sequence< DNA > seq;
   SequenceList< DNA > sequences;
 
-  while( !(dbReader->EndOfFile()) ) {
-    (*dbReader) >> seq;
+  while( !( dbReader->EndOfFile() ) ) {
+    ( *dbReader ) >> seq;
     sequences.push_back( std::move( seq ) );
   }
 
