@@ -22,22 +22,21 @@ BEGIN_RCPP
 END_RCPP
 }
 // read_fasta
-DataFrame read_fasta(std::string filename, std::string id_split_string, std::string filter);
-RcppExport SEXP _blaster_read_fasta(SEXP filenameSEXP, SEXP id_split_stringSEXP, SEXP filterSEXP) {
+DataFrame read_fasta(std::string filename, std::string filter);
+RcppExport SEXP _blaster_read_fasta(SEXP filenameSEXP, SEXP filterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
-    Rcpp::traits::input_parameter< std::string >::type id_split_string(id_split_stringSEXP);
     Rcpp::traits::input_parameter< std::string >::type filter(filterSEXP);
-    rcpp_result_gen = Rcpp::wrap(read_fasta(filename, id_split_string, filter));
+    rcpp_result_gen = Rcpp::wrap(read_fasta(filename, filter));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_blaster_blast", (DL_FUNC) &_blaster_blast, 7},
-    {"_blaster_read_fasta", (DL_FUNC) &_blaster_read_fasta, 3},
+    {"_blaster_read_fasta", (DL_FUNC) &_blaster_read_fasta, 2},
     {NULL, NULL, 0}
 };
 
