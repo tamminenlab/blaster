@@ -5,10 +5,6 @@ blast <- function(query_table, db_table, output_file, maxAccepts = 1L, maxReject
     invisible(.Call(`_blaster_blast`, query_table, db_table, output_file, maxAccepts, maxRejects, minIdentity, strand))
 }
 
-create_sequence_chunks <- function(seq_table, window_size = 20L) {
-    .Call(`_blaster_create_sequence_chunks`, seq_table, window_size)
-}
-
 read_fasta <- function(filename, id_split_string = "", filter = "") {
     .Call(`_blaster_read_fasta`, filename, id_split_string, filter)
 }
