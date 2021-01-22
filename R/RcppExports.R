@@ -9,14 +9,6 @@ create_sequence_chunks <- function(seq_table, window_size = 20L) {
     .Call(`_blaster_create_sequence_chunks`, seq_table, window_size)
 }
 
-make_degenerate_sequence <- function(sequences, sequence_length, cutoff = 0.1) {
-    .Call(`_blaster_make_degenerate_sequence`, sequences, sequence_length, cutoff)
-}
-
-process_blast_table <- function(filename, hit_len) {
-    .Call(`_blaster_process_blast_table`, filename, hit_len)
-}
-
 read_fasta <- function(filename, id_split_string = "", filter = "") {
     .Call(`_blaster_read_fasta`, filename, id_split_string, filter)
 }

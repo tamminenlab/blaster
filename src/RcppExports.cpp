@@ -33,31 +33,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// make_degenerate_sequence
-StringVector make_degenerate_sequence(StringVector sequences, int sequence_length, double cutoff);
-RcppExport SEXP _blaster_make_degenerate_sequence(SEXP sequencesSEXP, SEXP sequence_lengthSEXP, SEXP cutoffSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< StringVector >::type sequences(sequencesSEXP);
-    Rcpp::traits::input_parameter< int >::type sequence_length(sequence_lengthSEXP);
-    Rcpp::traits::input_parameter< double >::type cutoff(cutoffSEXP);
-    rcpp_result_gen = Rcpp::wrap(make_degenerate_sequence(sequences, sequence_length, cutoff));
-    return rcpp_result_gen;
-END_RCPP
-}
-// process_blast_table
-List process_blast_table(std::string filename, int hit_len);
-RcppExport SEXP _blaster_process_blast_table(SEXP filenameSEXP, SEXP hit_lenSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
-    Rcpp::traits::input_parameter< int >::type hit_len(hit_lenSEXP);
-    rcpp_result_gen = Rcpp::wrap(process_blast_table(filename, hit_len));
-    return rcpp_result_gen;
-END_RCPP
-}
 // read_fasta
 DataFrame read_fasta(std::string filename, std::string id_split_string, std::string filter);
 RcppExport SEXP _blaster_read_fasta(SEXP filenameSEXP, SEXP id_split_stringSEXP, SEXP filterSEXP) {
@@ -75,8 +50,6 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_blaster_blast", (DL_FUNC) &_blaster_blast, 7},
     {"_blaster_create_sequence_chunks", (DL_FUNC) &_blaster_create_sequence_chunks, 2},
-    {"_blaster_make_degenerate_sequence", (DL_FUNC) &_blaster_make_degenerate_sequence, 3},
-    {"_blaster_process_blast_table", (DL_FUNC) &_blaster_process_blast_table, 2},
     {"_blaster_read_fasta", (DL_FUNC) &_blaster_read_fasta, 3},
     {NULL, NULL, 0}
 };
