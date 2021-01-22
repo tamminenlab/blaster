@@ -1,3 +1,16 @@
+#' Blaster
+#' 
+#' Blaster implements an efficient BLAST-like sequence
+#' comparison algorithm using native R datatypes.
+#' 
+#' @docType package
+#' @author Manu Tamminen <mavatam.@utu.fi>, Steven Schmid
+#' @import Rcpp 
+#' @importFrom Rcpp evalCpp
+#' @useDynLib blaster
+#' @name blaster
+NULL
+
 
 #' Creates random tmp filename
 #'
@@ -26,28 +39,34 @@ create_random_name <- function(length = 20, suffix = ".csv")
 #' @param minIdentity A number
 #' @param strand A string
 #' @return A dataframe
-run_blast <- function(query_table,
-               db_table,
-               maxAccepts = 1,
-               maxRejects = 16,
-               minIdentity = 0.75,
-               strand = "both")
+#' @export
+blast <- function(query_table,
+           db_table,
+           maxAccepts = 1,
+           maxRejects = 16,
+           minIdentity = 0.75,
+           strand = "both",
+           output_to_tmp_file = FALSE)
 {
     tmp_file <- create_random_name()
-    on.exit(file.remove(tmp_file), add = TRUE)
+    if (!output_to_tmp_file)
+        on.exit(file.remove(tmp_file), add = TRUE)
 
-    blast(query_table,
-          db_table,
+    pre_blast(query_table,
+              db_table,
           tmp_file,
           maxAccepts,
           maxRejects,
           minIdentity,
           strand)
 
-    read.csv(tmp_file,
-             col.names = c("QueryId", "TargetId", "QueryMatchStart",
-                           "QueryMatchEnd", "TargetMatchStart",
-                           "TargetMatchEnd", "QueryMatchSeq",
-                           "TargetMatchSeq", "NumColumns", "NumMatches",
-                           "NumMismatches", "NumGaps", "Identity", "Alignment"))
+    if (output_to_tmp_file)
+        tmp_file
+    else
+        read.csv(tmp_file,
+                 col.names = c("QueryId", "TargetId", "QueryMatchStart",
+                               "QueryMatchEnd", "TargetMatchStart",
+                               "TargetMatchEnd", "QueryMatchSeq",
+                               "TargetMatchSeq", "NumColumns", "NumMatches",
+                               "NumMismatches", "NumGaps", "Identity", "Alignment"))
 }

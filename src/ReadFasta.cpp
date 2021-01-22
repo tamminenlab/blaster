@@ -8,6 +8,11 @@
 
 using namespace Rcpp;
 
+//' Read the contents of a Fasta file into a DataFrame
+//' 
+//' @param filename A string
+//' @param filter A string
+//' @export
 // [[Rcpp::export]]
 DataFrame read_fasta(std::string filename,
                      std::string filter = "") 

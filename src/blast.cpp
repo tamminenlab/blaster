@@ -126,9 +126,18 @@ std::string DFtoSeq(DataFrame seq_table)
   return content.str();
 }
 
+//' Perform a BLAST-like sequence similarity search
+//' 
+//' @param query_table A DataFrame
+//' @param db_table A DataFrame
+//' @param output_file A string
+//' @param maxAccepts An integer
+//' @param maxRejects An integer
+//' @param minIdentity A double
+//' @param strand A string
 // [[Rcpp::export]]
 
-void blast(DataFrame query_table,
+void pre_blast(DataFrame query_table,
            DataFrame db_table,
            std::string output_file,
            int maxAccepts = 1,
