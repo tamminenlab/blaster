@@ -5,9 +5,9 @@
 
 using namespace Rcpp;
 
-// pre_blast
-void pre_blast(DataFrame query_table, DataFrame db_table, std::string output_file, int maxAccepts, int maxRejects, double minIdentity, std::string strand);
-RcppExport SEXP _blaster_pre_blast(SEXP query_tableSEXP, SEXP db_tableSEXP, SEXP output_fileSEXP, SEXP maxAcceptsSEXP, SEXP maxRejectsSEXP, SEXP minIdentitySEXP, SEXP strandSEXP) {
+// dna_blast
+void dna_blast(DataFrame query_table, DataFrame db_table, std::string output_file, int maxAccepts, int maxRejects, double minIdentity, std::string strand);
+RcppExport SEXP _blaster_dna_blast(SEXP query_tableSEXP, SEXP db_tableSEXP, SEXP output_fileSEXP, SEXP maxAcceptsSEXP, SEXP maxRejectsSEXP, SEXP minIdentitySEXP, SEXP strandSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type query_table(query_tableSEXP);
@@ -17,7 +17,22 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type maxRejects(maxRejectsSEXP);
     Rcpp::traits::input_parameter< double >::type minIdentity(minIdentitySEXP);
     Rcpp::traits::input_parameter< std::string >::type strand(strandSEXP);
-    pre_blast(query_table, db_table, output_file, maxAccepts, maxRejects, minIdentity, strand);
+    dna_blast(query_table, db_table, output_file, maxAccepts, maxRejects, minIdentity, strand);
+    return R_NilValue;
+END_RCPP
+}
+// protein_blast
+void protein_blast(DataFrame query_table, DataFrame db_table, std::string output_file, int maxAccepts, int maxRejects, double minIdentity);
+RcppExport SEXP _blaster_protein_blast(SEXP query_tableSEXP, SEXP db_tableSEXP, SEXP output_fileSEXP, SEXP maxAcceptsSEXP, SEXP maxRejectsSEXP, SEXP minIdentitySEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< DataFrame >::type query_table(query_tableSEXP);
+    Rcpp::traits::input_parameter< DataFrame >::type db_table(db_tableSEXP);
+    Rcpp::traits::input_parameter< std::string >::type output_file(output_fileSEXP);
+    Rcpp::traits::input_parameter< int >::type maxAccepts(maxAcceptsSEXP);
+    Rcpp::traits::input_parameter< int >::type maxRejects(maxRejectsSEXP);
+    Rcpp::traits::input_parameter< double >::type minIdentity(minIdentitySEXP);
+    protein_blast(query_table, db_table, output_file, maxAccepts, maxRejects, minIdentity);
     return R_NilValue;
 END_RCPP
 }
@@ -35,7 +50,8 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_blaster_pre_blast", (DL_FUNC) &_blaster_pre_blast, 7},
+    {"_blaster_dna_blast", (DL_FUNC) &_blaster_dna_blast, 7},
+    {"_blaster_protein_blast", (DL_FUNC) &_blaster_protein_blast, 6},
     {"_blaster_read_fasta", (DL_FUNC) &_blaster_read_fasta, 2},
     {NULL, NULL, 0}
 };

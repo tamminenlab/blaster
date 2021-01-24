@@ -126,7 +126,7 @@ std::string DFtoSeq(DataFrame seq_table)
   return content.str();
 }
 
-//' Perform a BLAST-like sequence similarity search
+//' Perform a BLAST-like sequence similarity search for nucleotide sequences
 //' 
 //' @param query_table A DataFrame
 //' @param db_table A DataFrame
@@ -137,7 +137,7 @@ std::string DFtoSeq(DataFrame seq_table)
 //' @param strand A string
 // [[Rcpp::export]]
 
-void pre_blast(DataFrame query_table,
+void dna_blast(DataFrame query_table,
            DataFrame db_table,
            std::string output_file,
            int maxAccepts = 1,
@@ -251,3 +251,121 @@ void pre_blast(DataFrame query_table,
   Rcout << "\n";
 }
 
+
+//' Perform a BLAST-like sequence similarity search for protein sequences
+//' 
+//' @param query_table A DataFrame
+//' @param db_table A DataFrame
+//' @param output_file A string
+//' @param maxAccepts An integer
+//' @param maxRejects An integer
+//' @param minIdentity A double
+// [[Rcpp::export]]
+
+void protein_blast(DataFrame query_table,
+           DataFrame db_table,
+           std::string output_file,
+           int maxAccepts = 1,
+           int maxRejects =  16,
+           double minIdentity = 0.75) 
+{
+
+  std::istringstream db_stream( DFtoSeq(db_table) );
+  std::unique_ptr< SequenceReader< Protein > > dbReader( new FASTA::Reader< Protein >( db_stream ) );
+  
+  Sequence< Protein > seq;
+  SequenceList< Protein > sequences;
+
+  while( !( dbReader->EndOfFile() ) ) {
+    ( *dbReader ) >> seq;
+    sequences.push_back( std::move( seq ) );
+  }
+
+  ProgressOutput progress;
+
+  enum ProgressType {
+                     ReadDBFile,
+                     StatsDB,
+                     IndexDB,
+                     ReadQueryFile,
+                     SearchDB,
+                     WriteHits
+  };
+
+  progress.Add( ProgressType::ReadDBFile, "Read database", UnitType::BYTES );
+  progress.Add( ProgressType::StatsDB, "Analyze database" );
+  progress.Add( ProgressType::IndexDB, "Index database" );
+  progress.Add( ProgressType::ReadQueryFile, "Read queries", UnitType::BYTES );
+  progress.Add( ProgressType::SearchDB, "Search database" );
+  progress.Add( ProgressType::WriteHits, "Write hits" );
+
+  // Read DB
+  progress.Activate( ProgressType::ReadDBFile );
+  while( !dbReader->EndOfFile() ) {
+    ( *dbReader ) >> seq;
+    sequences.push_back( std::move( seq ) );
+    progress.Set( ProgressType::ReadDBFile, dbReader->NumBytesRead(),
+                  dbReader->NumBytesTotal() );
+  }
+
+  // Index DB
+  Database< Protein > db( WordSize< Protein >::VALUE );
+  db.SetProgressCallback(
+                         [&]( typename Database< Protein >::ProgressType type, size_t num, size_t total ) {
+                           switch( type ) {
+                           case Database< Protein >::ProgressType::StatsCollection:
+                             progress.Activate( ProgressType::StatsDB )
+                               .Set( ProgressType::StatsDB, num, total );
+                             break;
+
+                           case Database< Protein >::ProgressType::Indexing:
+                             progress.Activate( ProgressType::IndexDB )
+                               .Set( ProgressType::IndexDB, num, total );
+                             break;
+
+                           default:
+                             break;
+                           }
+                         } );
+  db.Initialize( sequences );
+
+  // Read and process queries
+  const int numQueriesPerWorkItem = 64;
+  
+  SearchParams< Protein > searchParams;
+
+  searchParams.maxAccepts = maxAccepts;
+  searchParams.maxRejects = maxRejects;
+  searchParams.minIdentity = minIdentity;
+
+  SearchResultsWriter< Protein >   writer( 1, output_file );
+  QueryDatabaseSearcher< Protein > searcher( -1, &writer, &db, searchParams );
+
+  searcher.OnProcessed( [&]( size_t numProcessed, size_t numEnqueued ) {
+                          progress.Set( ProgressType::SearchDB, numProcessed, numEnqueued );
+                        } );
+  writer.OnProcessed( [&]( size_t numProcessed, size_t numEnqueued ) {
+                        progress.Set( ProgressType::WriteHits, numProcessed, numEnqueued );
+                      } );
+
+  std::istringstream query_stream( DFtoSeq(query_table) );
+  std::unique_ptr< SequenceReader< Protein > > qryReader( new FASTA::Reader< Protein >( query_stream ) );
+
+  SequenceList< Protein > queries;
+  progress.Activate( ProgressType::ReadQueryFile );
+  while( !qryReader->EndOfFile() ) {
+    qryReader->Read( numQueriesPerWorkItem, &queries );
+    searcher.Enqueue( queries );
+    progress.Set( ProgressType::ReadQueryFile, qryReader->NumBytesRead(),
+                  qryReader->NumBytesTotal() );
+  }
+
+  // Search
+  progress.Activate( ProgressType::SearchDB );
+  searcher.WaitTillDone();
+
+  progress.Activate( ProgressType::WriteHits );
+  writer.WaitTillDone();
+
+  Rcout << "\n";
+}

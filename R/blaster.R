@@ -32,19 +32,21 @@ create_random_name <- function(length = 20, suffix = ".csv")
 
 #' Runs BLAST algorithm
 #'
-#' @param query_table A dataframe
-#' @param db_table A dataframe
+#' @param query A dataframe or a string
+#' @param db A dataframe or a string
 #' @param maxAccepts A number
 #' @param maxRejects A number
 #' @param minIdentity A number
+#' @param alphabet A string
 #' @param strand A string
 #' @return A dataframe
 #' @export
-blast <- function(query_table,
-           db_table,
+blast <- function(query,
+           db,
            maxAccepts = 1,
            maxRejects = 16,
            minIdentity = 0.75,
+           alphabet = "nt", 
            strand = "both",
            output_to_tmp_file = FALSE)
 {
@@ -52,13 +54,31 @@ blast <- function(query_table,
     if (!output_to_tmp_file)
         on.exit(file.remove(tmp_file), add = TRUE)
 
-    pre_blast(query_table,
-              db_table,
-          tmp_file,
-          maxAccepts,
-          maxRejects,
-          minIdentity,
-          strand)
+    if (is.character(query))
+        query <- read_fasta(query)
+    
+    if (is.character(db))
+        db <- read_fasta(db)
+
+    if (alphabet == "nt")
+        dna_blast(
+            query,
+            db,
+            tmp_file,
+            maxAccepts,
+            maxRejects,
+            minIdentity,
+            strand)
+    else if (alphabet == "protein")
+        protein_blast(
+            query,
+            db,
+            tmp_file,
+            maxAccepts,
+            maxRejects,
+            minIdentity)
+    else
+        stop("Supported alphabet include nt and protein.")
 
     if (output_to_tmp_file)
         tmp_file
