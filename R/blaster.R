@@ -39,7 +39,7 @@ create_random_name <- function(length = 20, suffix = ".csv")
 #' @param minIdentity A number
 #' @param alphabet A string
 #' @param strand A string
-#' @return A dataframe
+#' @return A dataframe or a string
 #' @export
 blast <- function(query,
            db,
