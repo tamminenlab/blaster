@@ -52,7 +52,7 @@ blast <- function(query,
 {
     tmp_file <- create_random_name()
     if (!output_to_tmp_file)
-        on.exit(file.remove(tmp_file), add = TRUE)
+        on.exit(if (exists(tmp_file)) file.remove(tmp_file), add = TRUE)
 
     if (is.character(query))
         query <- read_fasta(query)
