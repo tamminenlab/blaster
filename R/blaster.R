@@ -39,6 +39,7 @@ create_random_name <- function(length = 20, suffix = ".csv")
 #' @param minIdentity A number
 #' @param alphabet A string
 #' @param strand A string
+#' @param output_to_file A boolean
 #' @return A dataframe or a string
 #' @export
 blast <- function(query,
@@ -48,10 +49,10 @@ blast <- function(query,
            minIdentity = 0.75,
            alphabet = "nt", 
            strand = "both",
-           output_to_tmp_file = FALSE)
+           output_to_file = FALSE)
 {
     tmp_file <- create_random_name()
-    if (!output_to_tmp_file)
+    if (!output_to_file)
         on.exit(if (exists(tmp_file)) file.remove(tmp_file), add = TRUE)
 
     if (is.character(query))
