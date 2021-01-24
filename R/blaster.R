@@ -81,7 +81,7 @@ blast <- function(query,
     else
         stop("Supported alphabet include nt and protein.")
 
-    if (output_to_tmp_file)
+    if (output_to_file)
         tmp_file
     else
         read.csv(tmp_file,
