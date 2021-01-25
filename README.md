@@ -1,6 +1,6 @@
-# Blaster - a native R implementation of an efficient BLAST algorithm
+# Blaster - a native R implementation of an efficient BLAST-like algorithm
 
-Description: Blaster implements an efficient BLAST-like sequence comparison algorithm using native R datatypes.
+Blaster implements an efficient BLAST-like sequence comparison algorithm, written in C++11 and using native R datatypes. Blaster is light-weight, fast and dependency-free.
 
 ## Installation
 
