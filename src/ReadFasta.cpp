@@ -10,8 +10,15 @@ using namespace Rcpp;
 
 //' Read the contents of a Fasta file into a DataFrame
 //' 
-//' @param filename A string
-//' @param filter A string
+//' @param filename A string; name of the imported Fasta file.
+//' @param filter A string; only include those entries which contain a sequence motif specified in this argument.
+//' @return A dataframe with Id and Seq columns
+//' @examples
+//' 
+//' query <- read_fasta(filename = "extdata/query.fasta")
+//' 
+//' query <- read_fasta(filename = "extdata/db.fasta", filter = "TGGTTGAGG")
+//' 
 //' @export
 // [[Rcpp::export]]
 DataFrame read_fasta(std::string filename,

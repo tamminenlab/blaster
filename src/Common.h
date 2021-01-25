@@ -87,7 +87,7 @@ public:
 
   ProgressOutput& Activate( const int id ) {
     if( mActiveId != id )
-      std::cerr << std::endl;
+      Rcpp::Rcerr << std::endl;
 
     mActiveId = id;
     Print( mStages[ id ] );
@@ -106,7 +106,7 @@ private:
     }
     stage.lastPrint = now;
 
-    std::ostream& os = std::cerr;
+    std::ostream& os = Rcpp::Rcerr;
 
     size_t maxLabelLen = 0;
     for( auto& s : mStages ) {

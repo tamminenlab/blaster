@@ -126,17 +126,8 @@ std::string DFtoSeq(DataFrame seq_table)
   return content.str();
 }
 
-//' Perform a BLAST-like sequence similarity search for nucleotide sequences
-//' 
-//' @param query_table A DataFrame
-//' @param db_table A DataFrame
-//' @param output_file A string
-//' @param maxAccepts An integer
-//' @param maxRejects An integer
-//' @param minIdentity A double
-//' @param strand A string
-// [[Rcpp::export]]
 
+// [[Rcpp::export]]
 void dna_blast(DataFrame query_table,
            DataFrame db_table,
            std::string output_file,
@@ -252,16 +243,7 @@ void dna_blast(DataFrame query_table,
 }
 
 
-//' Perform a BLAST-like sequence similarity search for protein sequences
-//' 
-//' @param query_table A DataFrame
-//' @param db_table A DataFrame
-//' @param output_file A string
-//' @param maxAccepts An integer
-//' @param maxRejects An integer
-//' @param minIdentity A double
 // [[Rcpp::export]]
-
 void protein_blast(DataFrame query_table,
            DataFrame db_table,
            std::string output_file,

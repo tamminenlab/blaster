@@ -24,4 +24,8 @@ db <- read_fasta("db.fasta")
 
 blast(query, db)
 
+# Filter the sequences containing motif GAGACTT
+
+query <- read_fasta("query.fasta", "GAGACTT")
+
 ```

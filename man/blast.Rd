@@ -5,19 +5,20 @@
 \title{Runs BLAST algorithm}
 \usage{
 blast(
-  query_table,
-  db_table,
+  query,
+  db,
   maxAccepts = 1,
   maxRejects = 16,
   minIdentity = 0.75,
+  alphabet = "nt",
   strand = "both",
-  output_to_tmp_file = FALSE
+  output_to_file = FALSE
 )
 }
 \arguments{
-\item{query_table}{A dataframe}
+\item{query}{A dataframe or a string}
 
-\item{db_table}{A dataframe}
+\item{db}{A dataframe or a string}
 
 \item{maxAccepts}{A number}
 
@@ -25,11 +26,24 @@ blast(
 
 \item{minIdentity}{A number}
 
+\item{alphabet}{A string}
+
 \item{strand}{A string}
+
+\item{output_to_file}{A boolean}
 }
 \value{
-A dataframe
+A dataframe or a string
 }
 \description{
 Runs BLAST algorithm
+}
+\examples{
+
+blast_table <- blast(query = "query.fasta", db = "db.fasta")
+
+query <- read_fasta(filename = "query.fasta")
+db <- read_fasta(filename = "db.fasta")
+blast_table <- blast(query = query, db = db)
+
 }

@@ -12,24 +12,6 @@
 NULL
 
 
-#' Creates random tmp filename
-#'
-#' @param length A number
-#' @param suffix A string
-#' @return A string; random filename
-#' @examples
-#' create_random_name()
-#' create_random_name(length=30, suffix = ".txt")
-create_random_name <- function(length = 20, suffix = ".csv")
-{
-    paste0(
-        paste0(sample(c(letters, 1:9),
-                      length),
-               collapse = ""),
-        suffix)
-}
-
-
 #' Runs BLAST algorithm
 #'
 #' @param query A dataframe or a string
@@ -41,7 +23,16 @@ create_random_name <- function(length = 20, suffix = ".csv")
 #' @param strand A string
 #' @param output_to_file A boolean
 #' @return A dataframe or a string
+#' @examples
+#'
+#' blast_table <- blast(query = "query.fasta", db = "db.fasta")
+#'
+#' query <- read_fasta(filename = "query.fasta")
+#' db <- read_fasta(filename = "db.fasta")
+#' blast_table <- blast(query = query, db = db)
+#' 
 #' @export
+#' @importFrom utils read.csv
 blast <- function(query,
            db,
            maxAccepts = 1,
@@ -51,7 +42,7 @@ blast <- function(query,
            strand = "both",
            output_to_file = FALSE)
 {
-    tmp_file <- create_random_name()
+    tmp_file <- tempfile(fileext = ".csv")
     if (!output_to_file)
         on.exit(if (exists(tmp_file)) file.remove(tmp_file), add = TRUE)
 

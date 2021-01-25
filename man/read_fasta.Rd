@@ -7,10 +7,20 @@
 read_fasta(filename, filter = "")
 }
 \arguments{
-\item{filename}{A string}
+\item{filename}{A string; name of the imported Fasta file.}
 
-\item{filter}{A string}
+\item{filter}{A string; only include those entries which contain a sequence motif specified in this argument.}
+}
+\value{
+A dataframe with Id and Seq columns
 }
 \description{
 Read the contents of a Fasta file into a DataFrame
+}
+\examples{
+
+query <- read_fasta(filename = "extdata/query.fasta")
+
+query <- read_fasta(filename = "extdata/db.fasta", filter = "TGGTTGAGG")
+
 }
