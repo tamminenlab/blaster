@@ -1,7 +1,27 @@
-# Blaster
+# Blaster - a native R implementation of an efficient BLAST algorithm
 
-Building:
+Description: Blaster implements an efficient BLAST-like sequence comparison algorithm using native R datatypes.
 
-git clone https://github.com/manutamminen/blaster.git
+## Installation
 
-R CMD build blaster && R CMD INSTALL blaster_0.1.tar.gz
+```R
+# install.packages("devtools")
+devtools::install_github("tidyverse/dplyr")
+```
+
+## Examples
+
+```R
+# Read a query file into DataFrame
+
+query <- read_fasta("query.fasta")
+
+# Read a database file into a DataFrame
+
+db <- read_fasta("db.fasta")
+
+# BLAST the query against the database
+
+blast(query, db)
+
+```
