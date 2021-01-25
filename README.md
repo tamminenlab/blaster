@@ -29,3 +29,4 @@ blast(query, db)
 query <- read_fasta("query.fasta", "GAGACTT")
 
 ```
+
