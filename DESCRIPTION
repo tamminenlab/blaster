@@ -9,7 +9,8 @@ Authors@R: c(person("Manu", "Tamminen", email = "mavatam@utu.fi",
                   role = c("aut")))
 Maintainer: Manu Tamminen <mavatam@utu.fi>
 Description: Implementation of an efficient BLAST-like sequence 
-             comparison algorithm using native R datatypes.
+             comparison algorithm, written in C++11 and using
+             native R datatypes.
 License: BSD_3_clause + file LICENSE
 Imports: Rcpp (>= 1.0.5)
 LinkingTo: Rcpp
