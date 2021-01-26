@@ -24,6 +24,11 @@ using namespace Rcpp;
 DataFrame read_fasta(std::string filename,
                      std::string filter = "") 
 {
+  std::ifstream f(filename);
+  if (!f.good())
+    stop("File does not exist.");
+  f.close(); 
+  
   std::unique_ptr< SequenceReader< DNA > > dbReader( new FASTA::Reader< DNA >( filename ) );
 
   Sequence< DNA > seq;
