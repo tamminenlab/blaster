@@ -6,7 +6,7 @@ Blaster implements an efficient BLAST-like sequence comparison algorithm, writte
 
 ```R
 # install.packages("devtools")
-devtools::install_github("tidyverse/dplyr")
+devtools::install_github("manutamminen/blaster")
 ```
 
 ## Examples

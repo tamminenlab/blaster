@@ -1,6 +1,6 @@
 #include <Rcpp.h>
 #include <string>
-#include <regex>
+#include <fstream>
 
 #include "FASTA/Reader.h"
 #include "Alphabet/DNA.h"
