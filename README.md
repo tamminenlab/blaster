@@ -1,6 +1,6 @@
 # Blaster - a native R implementation of an efficient BLAST-like algorithm
 
-Blaster implements an efficient BLAST-like sequence comparison algorithm, written in C++11 and using native R datatypes. Blaster is light-weight, fast and dependency-free.
+Blaster implements an efficient BLAST-like sequence comparison algorithm, written in C++11 and using native R datatypes. Blaster is light-weight, fast and dependency-free. The code base of Blaster is adapted from [nsearch](https://github.com/stevschmid/nsearch).
 
 ## Installation
 
