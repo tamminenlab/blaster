@@ -40,10 +40,13 @@ Runs BLAST algorithm
 }
 \examples{
 
-blast_table <- blast(query = "query.fasta", db = "db.fasta")
+query <- system.file("extdata", "query.fasta", package = "blaster")
+db <- system.file("extdata", "db.fasta", package = "blaster")
 
-query <- read_fasta(filename = "query.fasta")
-db <- read_fasta(filename = "db.fasta")
+blast_table <- blast(query = query, db = db)
+
+query <- read_fasta(filename = query)
+db <- read_fasta(filename = db)
 blast_table <- blast(query = query, db = db)
 
 }

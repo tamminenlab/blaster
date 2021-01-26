@@ -15,9 +15,12 @@ using namespace Rcpp;
 //' @return A dataframe with Id and Seq columns
 //' @examples
 //' 
-//' query <- read_fasta(filename = "extdata/query.fasta")
+//' query <- system.file("extdata", "query.fasta", package = "blaster")
+//' db <- system.file("extdata", "db.fasta", package = "blaster")
 //' 
-//' query <- read_fasta(filename = "extdata/db.fasta", filter = "TGGTTGAGG")
+//' query <- read_fasta(filename = query)
+//' 
+//' query <- read_fasta(filename = db, filter = "TGGTTGAGG")
 //' 
 //' @export
 // [[Rcpp::export]]

@@ -19,8 +19,11 @@ Read the contents of a Fasta file into a DataFrame
 }
 \examples{
 
-query <- read_fasta(filename = "extdata/query.fasta")
+query <- system.file("extdata", "query.fasta", package = "blaster")
+db <- system.file("extdata", "db.fasta", package = "blaster")
 
-query <- read_fasta(filename = "extdata/db.fasta", filter = "TGGTTGAGG")
+query <- read_fasta(filename = query)
+
+query <- read_fasta(filename = db, filter = "TGGTTGAGG")
 
 }
