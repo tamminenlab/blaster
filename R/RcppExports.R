@@ -19,12 +19,27 @@ protein_blast <- function(query_table, db_table, output_file, maxAccepts = 1L, m
 #' query <- system.file("extdata", "query.fasta", package = "blaster")
 #' db <- system.file("extdata", "db.fasta", package = "blaster")
 #' 
-#' query <- read_fasta(filename = query)
+#' query <- read_dna_fasta(filename = query)
 #' 
-#' query <- read_fasta(filename = db, filter = "TGGTTGAGG")
+#' query <- read_dna_fasta(filename = db, filter = "TGGTTGAGG")
 #' 
 #' @export
-read_fasta <- function(filename, filter = "", non_nucleotide_chars = "error") {
-    .Call('_blaster_read_fasta', PACKAGE = 'blaster', filename, filter, non_nucleotide_chars)
+read_dna_fasta <- function(filename, filter = "", non_nucleotide_chars = "error") {
+    .Call('_blaster_read_dna_fasta', PACKAGE = 'blaster', filename, filter, non_nucleotide_chars)
+}
+
+#' Read the contents of a protein Fasta file into a DataFrame
+#' 
+#' @param filename A string; name of the imported protein Fasta file.
+#' @param filter A string; only include those entries which contain a sequence motif specified in this argument.
+#' @return A dataframe with Id and Seq columns
+#' @examples
+#' 
+#' query <- system.file("extdata", "query.fasta", package = "blaster")
+#' db <- system.file("extdata", "db.fasta", package = "blaster")
+#' 
+#' @export
+read_protein_fasta <- function(filename, filter = "", non_aa_chars = "error") {
+    .Call('_blaster_read_protein_fasta', PACKAGE = 'blaster', filename, filter, non_aa_chars)
 }
 

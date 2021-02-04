@@ -37,13 +37,13 @@ NULL
 #' @export
 #' @importFrom utils read.csv
 blast <- function(query,
-           db,
-           maxAccepts = 1,
-           maxRejects = 16,
-           minIdentity = 0.75,
-           alphabet = "nt", 
-           strand = "both",
-           output_to_file = FALSE)
+                  db,
+                  maxAccepts = 1,
+                  maxRejects = 16,
+                  minIdentity = 0.75,
+                  alphabet = "nt", 
+                  strand = "both",
+                  output_to_file = FALSE)
 {
     tmp_file <- tempfile(fileext = ".csv")
     if (!output_to_file)
@@ -79,9 +79,53 @@ blast <- function(query,
         tmp_file
     else
         read.csv(tmp_file,
-                 col.names = c("QueryId", "TargetId", "QueryMatchStart",
-                               "QueryMatchEnd", "TargetMatchStart",
-                               "TargetMatchEnd", "QueryMatchSeq",
-                               "TargetMatchSeq", "NumColumns", "NumMatches",
-                               "NumMismatches", "NumGaps", "Identity", "Alignment"))
+                 col.names = c(
+                     "QueryId", "TargetId", "QueryMatchStart",
+                     "QueryMatchEnd", "TargetMatchStart",
+                     "TargetMatchEnd", "QueryMatchSeq",
+                     "TargetMatchSeq", "NumColumns", "NumMatches",
+                     "NumMismatches", "NumGaps", "Identity", "Alignment"))
+}
+
+
+#' Read the contents of nucleotide or protein Fasta file
+#'
+#' @param filename A string
+#' @param filter A string
+#' @param alphabet A string
+#' @param non_standard_chars A string
+#' @return A dataframe
+#' @examples
+#' 
+#' query <- system.file("extdata", "query.fasta", package = "blaster")
+#' db <- system.file("extdata", "db.fasta", package = "blaster")
+#' protein <- system.file("extdata", "prot.fasta", package = "blaster")
+#'
+#' query <- read_fasta(filename = query)
+#'
+#' query <- read_fasta(filename = query, filter = "TGGTTGAGG")
+#'
+#' query <- read_fasta(filename = query, non_nucleotide_chars = "remove")
+#' 
+#' query <- read_fasta(filename = protein, alphabet ="protein")
+#' 
+#' @export
+read_fasta <- function(filename,
+                       filter = "",
+                       alphabet = "nt",
+                       non_standard_chars = "error")
+{
+    if (alphabet == "nt") {
+        read_dna_fasta(
+            filename,
+            filter,
+            non_standard_chars)
+    } else if (alphabet == "protein") {
+        read_protein_fasta(
+            filename,
+            filter,
+            non_standard_chars)
+    } else {
+        stop('Supported alphabet include "nt" and "protein".')
+    }
 }
