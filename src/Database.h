@@ -27,8 +27,8 @@ public:
   void Initialize( const SequenceList< Alphabet >& sequences );
 
   size_t NumSequences() const;
-  size_t MaxUniqueKmers() const;
   size_t KmerLength() const;
+  size_t MaxUniqueKmers() const;
 
   const Sequence< Alphabet >& GetSequenceById( const SequenceId& seqId ) const;
 
@@ -38,20 +38,21 @@ public:
                                     size_t* numSeqIds ) const;
 
 private:
-  size_t mKmerLength;
-
+  OnProgressCallback mProgressCallback;
   SequenceList< Alphabet > mSequences;
-  size_t                   mMaxUniqueKmers;
 
+  std::vector< Kmer >   mKmers;
+
+  size_t mKmerLength;
+  size_t mMaxUniqueKmers;
+
+  std::vector< SequenceId > mSequenceIds;
   std::vector< size_t >     mSequenceIdsOffsetByKmer;
   std::vector< size_t >     mSequenceIdsCountByKmer;
-  std::vector< SequenceId > mSequenceIds;
 
   std::vector< size_t > mKmerOffsetBySequenceId;
   std::vector< size_t > mKmerCountBySequenceId;
-  std::vector< Kmer >   mKmers;
 
-  OnProgressCallback mProgressCallback;
 };
 
 /*
@@ -59,9 +60,9 @@ private:
  */
 template < typename A >
 Database< A >::Database( const size_t kmerLength )
-    : mKmerLength( kmerLength ),
-      mProgressCallback( []( ProgressType, const size_t, const size_t ) {} ),
-      mMaxUniqueKmers( 1 << ( BitMapPolicy< A >::NumBits * mKmerLength ) )
+  :  mProgressCallback( []( ProgressType, const size_t, const size_t ) {} ),
+     mKmerLength( kmerLength ),
+     mMaxUniqueKmers( 1 << ( BitMapPolicy< A >::NumBits * mKmerLength ) )
 {
   assert( BitMapPolicy< A >::NumBits * mKmerLength <= sizeof( Kmer ) * 8 );
 }

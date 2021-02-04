@@ -14,5 +14,5 @@ Description: Implementation of an efficient BLAST-like sequence
 License: BSD_3_clause + file LICENSE
 Imports: Rcpp (>= 1.0.5)
 LinkingTo: Rcpp
-SystemRequirements: C++11
+SystemRequirements: C++14
 RoxygenNote: 7.1.1

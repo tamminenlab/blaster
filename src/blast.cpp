@@ -91,8 +91,8 @@ public:
   }
 
 private:
-  GlobalSearch< A >         mGlobalSearch;
   SearchResultsWriter< A >& mWriter;
+  GlobalSearch< A >         mGlobalSearch;
 };
 
 template < typename A >

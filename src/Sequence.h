@@ -57,9 +57,8 @@ public:
   float NumExpectedErrors() const;
 
   std::string identifier;
-  std::string quality;
-
   std::basic_string< typename Alphabet::CharType > sequence;
+  std::string quality;
 };
 
 template < typename Alphabet >
@@ -85,7 +84,8 @@ Sequence< A >::Sequence() : Sequence( "", "", "" ) {}
 
 template < typename A >
 Sequence< A >::Sequence( const Sequence& sequence )
-    : sequence( sequence.sequence ), identifier( sequence.identifier ),
+    : identifier( sequence.identifier ),
+      sequence( sequence.sequence ),
       quality( sequence.quality ) {}
 
 template < typename A >
