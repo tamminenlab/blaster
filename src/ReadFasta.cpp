@@ -8,6 +8,47 @@
 
 using namespace Rcpp;
 
+std::string process_dna_sequence(std::string sequence, std::string non_nucleotide_chars)
+{
+  std::unordered_set<char> nucleotides = {'A', 'T', 'C', 'G', 'W', 'S', 'M', '\r',
+                                          'K', 'R', 'Y', 'B', 'D', 'H', 'V', 'N'};
+  std::string str_acc = "";
+
+  if (non_nucleotide_chars == "remove") {
+    for (int i = 0; i < sequence.size(); ++i) {
+      if (nucleotides.find(sequence[i]) == nucleotides.end())
+        continue;
+      if (sequence[i] != '\r')
+        str_acc = str_acc + sequence[i];
+    }
+  } else if (non_nucleotide_chars == "ignore") {
+    for (int i = 0; i < sequence.size(); ++i) {
+      if (sequence[i] != '\r')
+        str_acc = str_acc + sequence[i];
+    }
+  } else if (non_nucleotide_chars == "error") {
+    for (int i = 0; i < sequence.size(); ++i) {
+      if (nucleotides.find(sequence[i]) == nucleotides.end())
+        stop("Non-nucleotide characters in the file!");
+      if (sequence[i] != '\r')
+        str_acc = str_acc + sequence[i];
+    }
+  } else {
+    stop("Argument 'non_nucleotide_chars' must be 'remove', 'ignore' or 'error'.");
+  }
+  return str_acc;
+}
+
+std::string process_id(std::string seq_id)
+{
+  std::string str_acc = "";
+  for (int i = 0; i < seq_id.size(); ++i) {
+    if (seq_id[i] != '\r')
+      str_acc = str_acc + seq_id[i];
+  }
+  return str_acc;
+}
+
 //' Read the contents of a Fasta file into a DataFrame
 //' 
 //' @param filename A string; name of the imported Fasta file.
@@ -25,7 +66,8 @@ using namespace Rcpp;
 //' @export
 // [[Rcpp::export]]
 DataFrame read_fasta(std::string filename,
-                     std::string filter = "") 
+                     std::string filter = "",
+                     std::string non_nucleotide_chars = "error") 
 {
   std::ifstream f(filename);
   if (!f.good())
@@ -54,8 +96,8 @@ DataFrame read_fasta(std::string filename,
   
   if (filter == "") {
     for (Sequence< DNA > i : sequences) {
-      sequence = i.sequence;
-      id = i.identifier;
+      sequence = process_dna_sequence(i.sequence, non_nucleotide_chars);
+      id = process_id(i.identifier);
       ids.push_back( id );
       seqs.push_back( sequence );
     }
@@ -64,8 +106,8 @@ DataFrame read_fasta(std::string filename,
   }
   else {
     for (Sequence< DNA > i : sequences) {
-      sequence = i.sequence;
-      id = i.identifier;
+      sequence = process_dna_sequence(i.sequence, non_nucleotide_chars);
+      id = process_id(i.identifier);
       if (sequence.find(filter) != std::string::npos) {
         part1 = sequence.substr(0, sequence.find(filter));
         part2 = sequence.substr(sequence.find(filter) + filter.size(),

@@ -90,14 +90,14 @@ Sequence< A >::Sequence( const Sequence& sequence )
 
 template < typename A >
 Sequence< A >::Sequence( Sequence< A >&& sequence )
-    : sequence( std::move( sequence.sequence ) ),
-      identifier( std::move( sequence.identifier ) ),
+    : identifier( std::move( sequence.identifier ) ),
+      sequence( std::move( sequence.sequence ) ),
       quality( std::move( sequence.quality ) ) {}
 
 template < typename A >
 Sequence< A >& Sequence< A >::operator=( const Sequence< A >& other ) {
-  sequence   = other.sequence;
   identifier = other.identifier;
+  sequence   = other.sequence;
   quality    = other.quality;
   return *this;
 }

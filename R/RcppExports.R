@@ -24,7 +24,7 @@ protein_blast <- function(query_table, db_table, output_file, maxAccepts = 1L, m
 #' query <- read_fasta(filename = db, filter = "TGGTTGAGG")
 #' 
 #' @export
-read_fasta <- function(filename, filter = "") {
-    .Call('_blaster_read_fasta', PACKAGE = 'blaster', filename, filter)
+read_fasta <- function(filename, filter = "", non_nucleotide_chars = "error") {
+    .Call('_blaster_read_fasta', PACKAGE = 'blaster', filename, filter, non_nucleotide_chars)
 }
 
