@@ -43,7 +43,7 @@ query <- read_fasta(filename = query)
 
 query <- read_fasta(filename = query, filter = "TGGTTGAGG")
 
-query <- read_fasta(filename = query, non_nucleotide_chars = "remove")
+query <- read_fasta(filename = query, non_standard_chars = "remove")
 
 query <- read_fasta(filename = protein, alphabet ="protein")
 
