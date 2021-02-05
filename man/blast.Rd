@@ -2,7 +2,7 @@
 % Please edit documentation in R/blaster.R
 \name{blast}
 \alias{blast}
-\title{Runs BLAST algorithm}
+\title{Runs BLAST sequence comparison algorithm.}
 \usage{
 blast(
   query,
@@ -10,33 +10,47 @@ blast(
   maxAccepts = 1,
   maxRejects = 16,
   minIdentity = 0.75,
-  alphabet = "nt",
+  alphabet = "nucleotide",
   strand = "both",
   output_to_file = FALSE
 )
 }
 \arguments{
-\item{query}{A dataframe or a string}
+\item{query}{A dataframe of the query sequences (containing Id and Seq columns)
+or a string specifying the FASTA file of the query sequences.}
 
-\item{db}{A dataframe or a string}
+\item{db}{A dataframe of the database sequences (containing Id and Seq columns)
+or a string specifying the FASTA file of the database sequences.}
 
-\item{maxAccepts}{A number}
+\item{maxAccepts}{A number specifying the maximum accepted hits.}
 
-\item{maxRejects}{A number}
+\item{maxRejects}{A number specifying the maximum rejected hits.}
 
-\item{minIdentity}{A number}
+\item{minIdentity}{A number specifying the minimal accepted sequence 
+similarity between the query and hit sequences.}
 
-\item{alphabet}{A string}
+\item{alphabet}{A string specifying the query and database alphabet: 
+'nucleotide' or 'protein'. Defaults to 'nucleotide'.}
 
-\item{strand}{A string}
+\item{strand}{A string specifying the strand to search: 'plus', 'minus' or
+'both'. Defaults to 'both'. Only affects nucleotide searches.}
 
-\item{output_to_file}{A boolean}
+\item{output_to_file}{A boolean specifying the output type. If TRUE, the
+results are written into a temporary file a string
+containing the file name and location is returned.
+Otherwise a dataframe of the results is returned.
+Defaults to FALSE.}
 }
 \value{
-A dataframe or a string
+A dataframe or a string. A dataframe is returned by default, containing
+        the BLAST output in columns QueryId, TargetId, QueryMatchStart, QueryMatchEnd,
+        TargetMatchStart, TargetMatchEnd, QueryMatchSeq, TargetMatchSeq, NumColumns,
+        NumMatches, NumMismatches, NumGaps, Identity and Alignment. A string is returned
+        if 'output_to_file' is set to TRUE. This string points to the temporary file
+        containing the output table.
 }
 \description{
-Runs BLAST algorithm
+Runs BLAST sequence comparison algorithm.
 }
 \examples{
 
@@ -48,5 +62,8 @@ blast_table <- blast(query = query, db = db)
 query <- read_fasta(filename = query)
 db <- read_fasta(filename = db)
 blast_table <- blast(query = query, db = db)
+
+prot <- system.file("extdata", "prot.fasta", package = "blaster")
+prot_blast_table <- blast(query = prot, db = prot, alphabet = "protein")
 
 }

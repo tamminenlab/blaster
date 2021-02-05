@@ -50,21 +50,7 @@ std::string process_id(std::string seq_id)
   return str_acc;
 }
 
-//' Read the contents of a Fasta file into a DataFrame
-//' 
-//' @param filename A string; name of the imported Fasta file.
-//' @param filter A string; only include those entries which contain a sequence motif specified in this argument.
-//' @return A dataframe with Id and Seq columns
-//' @examples
-//' 
-//' query <- system.file("extdata", "query.fasta", package = "blaster")
-//' db <- system.file("extdata", "db.fasta", package = "blaster")
-//' 
-//' query <- read_dna_fasta(filename = query)
-//' 
-//' query <- read_dna_fasta(filename = db, filter = "TGGTTGAGG")
-//' 
-//' @export
+// Read the contents of a nucleotide Fasta file into a DataFrame
 // [[Rcpp::export]]
 DataFrame read_dna_fasta(std::string filename,
                          std::string filter = "",
@@ -128,17 +114,7 @@ DataFrame read_dna_fasta(std::string filename,
                            Named("Part2") = parts2);
 }
 
-//' Read the contents of a protein Fasta file into a DataFrame
-//' 
-//' @param filename A string; name of the imported protein Fasta file.
-//' @param filter A string; only include those entries which contain a sequence motif specified in this argument.
-//' @return A dataframe with Id and Seq columns
-//' @examples
-//' 
-//' query <- system.file("extdata", "query.fasta", package = "blaster")
-//' db <- system.file("extdata", "db.fasta", package = "blaster")
-//' 
-//' @export
+// Read the contents of a protein Fasta file into a DataFrame
 // [[Rcpp::export]]
 DataFrame read_protein_fasta(std::string filename,
                              std::string filter = "",
