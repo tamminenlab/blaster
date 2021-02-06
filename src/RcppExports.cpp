@@ -37,28 +37,28 @@ BEGIN_RCPP
 END_RCPP
 }
 // read_dna_fasta
-DataFrame read_dna_fasta(std::string filename, std::string filter, std::string non_nucleotide_chars);
-RcppExport SEXP _blaster_read_dna_fasta(SEXP filenameSEXP, SEXP filterSEXP, SEXP non_nucleotide_charsSEXP) {
+DataFrame read_dna_fasta(std::string filename, std::string filter, std::string non_standard_chars);
+RcppExport SEXP _blaster_read_dna_fasta(SEXP filenameSEXP, SEXP filterSEXP, SEXP non_standard_charsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
     Rcpp::traits::input_parameter< std::string >::type filter(filterSEXP);
-    Rcpp::traits::input_parameter< std::string >::type non_nucleotide_chars(non_nucleotide_charsSEXP);
-    rcpp_result_gen = Rcpp::wrap(read_dna_fasta(filename, filter, non_nucleotide_chars));
+    Rcpp::traits::input_parameter< std::string >::type non_standard_chars(non_standard_charsSEXP);
+    rcpp_result_gen = Rcpp::wrap(read_dna_fasta(filename, filter, non_standard_chars));
     return rcpp_result_gen;
 END_RCPP
 }
 // read_protein_fasta
-DataFrame read_protein_fasta(std::string filename, std::string filter, std::string non_aa_chars);
-RcppExport SEXP _blaster_read_protein_fasta(SEXP filenameSEXP, SEXP filterSEXP, SEXP non_aa_charsSEXP) {
+DataFrame read_protein_fasta(std::string filename, std::string filter, std::string non_standard_chars);
+RcppExport SEXP _blaster_read_protein_fasta(SEXP filenameSEXP, SEXP filterSEXP, SEXP non_standard_charsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
     Rcpp::traits::input_parameter< std::string >::type filter(filterSEXP);
-    Rcpp::traits::input_parameter< std::string >::type non_aa_chars(non_aa_charsSEXP);
-    rcpp_result_gen = Rcpp::wrap(read_protein_fasta(filename, filter, non_aa_chars));
+    Rcpp::traits::input_parameter< std::string >::type non_standard_chars(non_standard_charsSEXP);
+    rcpp_result_gen = Rcpp::wrap(read_protein_fasta(filename, filter, non_standard_chars));
     return rcpp_result_gen;
 END_RCPP
 }

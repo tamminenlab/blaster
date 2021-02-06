@@ -122,22 +122,14 @@ blast <- function(query,
 #' @examples
 #' 
 #' query <- system.file("extdata", "query.fasta", package = "blaster")
-#' db <- system.file("extdata", "db.fasta", package = "blaster")
-#' protein <- system.file("extdata", "prot.fasta", package = "blaster")
 #'
 #' query <- read_fasta(filename = query)
 #'
-#' query <- read_fasta(filename = query, filter = "TGGTTGAGG")
-#'
-#' query <- read_fasta(filename = query, non_standard_chars = "remove")
-#' 
-#' query <- read_fasta(filename = protein, alphabet ="protein")
-#' 
 #' @export
 read_fasta <- function(filename,
                        filter = "",
-                       alphabet = "nucleotide",
-                       non_standard_chars = "error")
+                       non_standard_chars = "error",
+                       alphabet = "nucleotide")
 {
     if (alphabet == "nucleotide") {
         read_dna_fasta(

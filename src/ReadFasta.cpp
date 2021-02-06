@@ -10,32 +10,32 @@
 using namespace Rcpp;
 
 std::string process_sequence(std::string sequence,
-                             std::string non_nucleotide_chars,
+                             std::string non_standard_chars,
                              std::unordered_set<char> alphabet)
 {
   std::string str_acc = "";
 
-  if (non_nucleotide_chars == "remove") {
+  if (non_standard_chars == "remove") {
     for (int i = 0; i < sequence.size(); ++i) {
       if (alphabet.find(sequence[i]) == alphabet.end())
         continue;
       if (sequence[i] != '\r')
         str_acc = str_acc + sequence[i];
     }
-  } else if (non_nucleotide_chars == "ignore") {
+  } else if (non_standard_chars == "ignore") {
     for (int i = 0; i < sequence.size(); ++i) {
       if (sequence[i] != '\r')
         str_acc = str_acc + sequence[i];
     }
-  } else if (non_nucleotide_chars == "error") {
+  } else if (non_standard_chars == "error") {
     for (int i = 0; i < sequence.size(); ++i) {
       if (alphabet.find(sequence[i]) == alphabet.end())
-        stop("Non-nucleotide characters in the file!");
+        stop("Non-standard characters in the file!");
       if (sequence[i] != '\r')
         str_acc = str_acc + sequence[i];
     }
   } else {
-    stop("Argument 'non_nucleotide_chars' must be 'remove', 'ignore' or 'error'.");
+    stop("Argument 'non_standard_chars' must be 'remove', 'ignore' or 'error'.");
   }
   return str_acc;
 }
@@ -53,8 +53,8 @@ std::string process_id(std::string seq_id)
 // Read the contents of a nucleotide Fasta file into a DataFrame
 // [[Rcpp::export]]
 DataFrame read_dna_fasta(std::string filename,
-                         std::string filter = "",
-                         std::string non_nucleotide_chars = "error") 
+                         std::string filter,
+                         std::string non_standard_chars) 
 {
   std::ifstream f(filename);
   if (!f.good())
@@ -80,12 +80,12 @@ DataFrame read_dna_fasta(std::string filename,
   std::vector< std::string > seqs;
   std::vector< std::string > parts1;
   std::vector< std::string > parts2;
-  std::unordered_set<char> nucleotides = {'A', 'T', 'C', 'G', 'W', 'S', 'M', '\r',
-                                          'K', 'R', 'Y', 'B', 'D', 'H', 'V', 'N'};
+  std::unordered_set<char> nucleotides {'A', 'T', 'C', 'G', 'W', 'S', 'M', '\r',
+                                        'K', 'R', 'Y', 'B', 'D', 'H', 'V', 'N'};
   
   if (filter == "") {
     for (Sequence< DNA > i : sequences) {
-      sequence = process_sequence(i.sequence, non_nucleotide_chars, nucleotides);
+      sequence = process_sequence(i.sequence, non_standard_chars, nucleotides);
       id = process_id(i.identifier);
       ids.push_back( id );
       seqs.push_back( sequence );
@@ -95,7 +95,7 @@ DataFrame read_dna_fasta(std::string filename,
   }
   else {
     for (Sequence< DNA > i : sequences) {
-      sequence = process_sequence(i.sequence, non_nucleotide_chars, nucleotides);
+      sequence = process_sequence(i.sequence, non_standard_chars, nucleotides);
       id = process_id(i.identifier);
       if (sequence.find(filter) != std::string::npos) {
         part1 = sequence.substr(0, sequence.find(filter));
@@ -117,8 +117,8 @@ DataFrame read_dna_fasta(std::string filename,
 // Read the contents of a protein Fasta file into a DataFrame
 // [[Rcpp::export]]
 DataFrame read_protein_fasta(std::string filename,
-                             std::string filter = "",
-                             std::string non_aa_chars = "error") 
+                             std::string filter,
+                             std::string non_standard_chars) 
 {
   std::ifstream f(filename);
   if (!f.good())
@@ -144,14 +144,14 @@ DataFrame read_protein_fasta(std::string filename,
   std::vector< std::string > seqs;
   std::vector< std::string > parts1;
   std::vector< std::string > parts2;
-  std::unordered_set<char> aminoacids = {'A', 'R', 'N', 'D', 'C', 'E', 'Q', 'G', 'H',
-                                         'I', 'L', 'K', 'M', 'F', 'P', 'S', 'T', 'W',
-                                         'Y', 'V', '\r'};
+  std::unordered_set<char> aminoacids {'A', 'R', 'N', 'D', 'C', 'E', 'Q', 'G', 'H',
+                                       'I', 'L', 'K', 'M', 'F', 'P', 'S', 'T', 'W',
+                                       'Y', 'V', '\r'};
 
   
   if (filter == "") {
     for (Sequence< Protein > i : sequences) {
-      sequence = process_sequence(i.sequence, non_aa_chars, aminoacids);
+      sequence = process_sequence(i.sequence, non_standard_chars, aminoacids);
       id = process_id(i.identifier);
       ids.push_back( id );
       seqs.push_back( sequence );
@@ -161,7 +161,7 @@ DataFrame read_protein_fasta(std::string filename,
   }
   else {
     for (Sequence< Protein > i : sequences) {
-      sequence = process_sequence(i.sequence, non_aa_chars, aminoacids);
+      sequence = process_sequence(i.sequence, non_standard_chars, aminoacids);
       id = process_id(i.identifier);
       if (sequence.find(filter) != std::string::npos) {
         part1 = sequence.substr(0, sequence.find(filter));

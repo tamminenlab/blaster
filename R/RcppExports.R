@@ -9,11 +9,11 @@ protein_blast <- function(query_table, db_table, output_file, maxAccepts = 1L, m
     invisible(.Call('_blaster_protein_blast', PACKAGE = 'blaster', query_table, db_table, output_file, maxAccepts, maxRejects, minIdentity))
 }
 
-read_dna_fasta <- function(filename, filter = "", non_nucleotide_chars = "error") {
-    .Call('_blaster_read_dna_fasta', PACKAGE = 'blaster', filename, filter, non_nucleotide_chars)
+read_dna_fasta <- function(filename, filter, non_standard_chars) {
+    .Call('_blaster_read_dna_fasta', PACKAGE = 'blaster', filename, filter, non_standard_chars)
 }
 
-read_protein_fasta <- function(filename, filter = "", non_aa_chars = "error") {
-    .Call('_blaster_read_protein_fasta', PACKAGE = 'blaster', filename, filter, non_aa_chars)
+read_protein_fasta <- function(filename, filter, non_standard_chars) {
+    .Call('_blaster_read_protein_fasta', PACKAGE = 'blaster', filename, filter, non_standard_chars)
 }
 

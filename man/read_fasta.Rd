@@ -7,8 +7,8 @@
 read_fasta(
   filename,
   filter = "",
-  alphabet = "nucleotide",
-  non_standard_chars = "error"
+  non_standard_chars = "error",
+  alphabet = "nucleotide"
 )
 }
 \arguments{
@@ -18,12 +18,12 @@ read_fasta(
 Only keeps those sequences containing this motif. Also splits the
 matched sequences and provides the split parts in two additional columns.}
 
-\item{alphabet}{A string specifying the query and database alphabet: 
-'nucleotide' or 'protein'. Defaults to 'nucleotide'.}
-
 \item{non_standard_chars}{A string specifying instructions for handling non-standard
 nucleotide or amino acid characters. Options include 'remove',
 'ignore' or throw an 'error'. Defaults to 'error'.}
+
+\item{alphabet}{A string specifying the query and database alphabet: 
+'nucleotide' or 'protein'. Defaults to 'nucleotide'.}
 }
 \value{
 A dataframe containing FASTA ids (Id column) and sequences (Seq column).
@@ -36,15 +36,7 @@ Reads the contents of nucleotide or protein FASTA file into a dataframe.
 \examples{
 
 query <- system.file("extdata", "query.fasta", package = "blaster")
-db <- system.file("extdata", "db.fasta", package = "blaster")
-protein <- system.file("extdata", "prot.fasta", package = "blaster")
 
 query <- read_fasta(filename = query)
-
-query <- read_fasta(filename = query, filter = "TGGTTGAGG")
-
-query <- read_fasta(filename = query, non_standard_chars = "remove")
-
-query <- read_fasta(filename = protein, alphabet ="protein")
 
 }
