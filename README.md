@@ -14,15 +14,22 @@ devtools::install_github("manutamminen/blaster")
 ```R
 # Read a query file into DataFrame
 
-query <- read_fasta("query.fasta")
+query <- read_fasta("inst/extdata/query.fasta")
 
 # Read a database file into a DataFrame
 
-db <- read_fasta("db.fasta")
+db <- read_fasta("inst/extdata/db.fasta")
 
 # BLAST the query against the database
 
 blast(query, db)
+
+# BLAST protein sequence file against itself using filenames as blast function arguments
+
+prot_blast_table <-
+    blast(query = "inst/extdata/prot.fasta",
+          db = "inst/extdata/prot.fasta",
+          alphabet = "protein")
 
 # Filter the sequences containing motif GAGACTT
 
