@@ -22,7 +22,8 @@ db <- read_fasta("inst/extdata/db.fasta")
 
 # BLAST the query against the database
 
-blast(query, db)
+blast_table <- 
+    blast(query, db)
 
 # BLAST protein sequence file against itself using filenames as blast function arguments
 
