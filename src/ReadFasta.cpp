@@ -80,7 +80,7 @@ DataFrame read_dna_fasta(std::string filename,
   std::vector< std::string > seqs;
   std::vector< std::string > parts1;
   std::vector< std::string > parts2;
-  std::unordered_set<char> nucleotides {'A', 'T', 'C', 'G', 'W', 'S', 'M', '\r',
+  std::unordered_set<char> nucleotides {'A', 'T', 'C', 'G', 'U', 'W', 'S', 'M', '\r',
                                         'K', 'R', 'Y', 'B', 'D', 'H', 'V', 'N'};
   
   if (filter == "") {
