@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include "../SequenceReader.h"
 
 namespace FASTA {
@@ -20,6 +21,7 @@ public:
     std::string line;
     while( !SequenceReader< Alphabet >::EndOfFile() ) {
       ( *mTextReader ) >> line;
+      line.erase( std::remove( line.begin(), line.end(), '\r' ), line.end() );
 
       if( line[ 0 ] == '>' ) {
         mLastLine = line;

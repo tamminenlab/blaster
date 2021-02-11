@@ -34,10 +34,12 @@ public:
   }
 
   size_t DistanceTo( const HSP& other ) const {
-    size_t dx = ( a1 > other.a2 ? a1 - other.a2 : other.a1 - a2 );
+    // size_t dx = ( a1 > other.a2 ? a1 - other.a2 : other.a1 - a2 );
+    double dx = ( a1 > other.a2 ? a1 - other.a2 : other.a1 - a2 );
     dx        = dx > 0 ? dx - 1 : 0;
 
-    size_t dy = ( b1 > other.b2 ? b1 - other.b2 : other.b1 - b2 );
+    // size_t dy = ( b1 > other.b2 ? b1 - other.b2 : other.b1 - b2 );
+    double dy = ( b1 > other.b2 ? b1 - other.b2 : other.b1 - b2 );
     dy        = dy > 0 ? dy - 1 : 0;
 
     return sqrt( dx * dx + dy * dy );
