@@ -127,18 +127,25 @@ std::string DFtoSeq(DataFrame seq_table)
 }
 
 
+// void dna_blast(DataFrame query_table,
+//                DataFrame db_table,
+//                std::string output_file,
+//                int maxAccepts = 1,
+//                int maxRejects =  16,
+//                double minIdentity = 0.75,
+//                std::string strand = "both") 
+
 // [[Rcpp::export]]
-void dna_blast(DataFrame query_table,
-           DataFrame db_table,
-           std::string output_file,
-           int maxAccepts = 1,
-           int maxRejects =  16,
-           double minIdentity = 0.75,
-           std::string strand = "both") 
+void dna_blast(std::string query_table,
+               std::string db_table,
+               std::string output_file,
+               int maxAccepts = 1,
+               int maxRejects =  16,
+               double minIdentity = 0.75,
+               std::string strand = "both") 
 {
 
-  std::istringstream db_stream( DFtoSeq(db_table) );
-  std::unique_ptr< SequenceReader< DNA > > dbReader( new FASTA::Reader< DNA >( db_stream ) );
+  std::unique_ptr< SequenceReader< DNA > > dbReader( new FASTA::Reader< DNA >( db_table ) );
   
   Sequence< DNA > seq;
   SequenceList< DNA > sequences;
@@ -220,8 +227,7 @@ void dna_blast(DataFrame query_table,
                         progress.Set( ProgressType::WriteHits, numProcessed, numEnqueued );
                       } );
 
-  std::istringstream query_stream( DFtoSeq(query_table) );
-  std::unique_ptr< SequenceReader< DNA > > qryReader( new FASTA::Reader< DNA >( query_stream ) );
+  std::unique_ptr< SequenceReader< DNA > > qryReader( new FASTA::Reader< DNA >( query_table ) );
 
   SequenceList< DNA > queries;
   progress.Activate( ProgressType::ReadQueryFile );
@@ -244,16 +250,15 @@ void dna_blast(DataFrame query_table,
 
 
 // [[Rcpp::export]]
-void protein_blast(DataFrame query_table,
-           DataFrame db_table,
-           std::string output_file,
-           int maxAccepts = 1,
-           int maxRejects =  16,
-           double minIdentity = 0.75) 
+void protein_blast(std::string query_table,
+                   std::string db_table,
+                   std::string output_file,
+                   int maxAccepts = 1,
+                   int maxRejects =  16,
+                   double minIdentity = 0.75) 
 {
 
-  std::istringstream db_stream( DFtoSeq(db_table) );
-  std::unique_ptr< SequenceReader< Protein > > dbReader( new FASTA::Reader< Protein >( db_stream ) );
+  std::unique_ptr< SequenceReader< Protein > > dbReader( new FASTA::Reader< Protein >( db_table ) );
   
   Sequence< Protein > seq;
   SequenceList< Protein > sequences;
@@ -330,8 +335,7 @@ void protein_blast(DataFrame query_table,
                         progress.Set( ProgressType::WriteHits, numProcessed, numEnqueued );
                       } );
 
-  std::istringstream query_stream( DFtoSeq(query_table) );
-  std::unique_ptr< SequenceReader< Protein > > qryReader( new FASTA::Reader< Protein >( query_stream ) );
+  std::unique_ptr< SequenceReader< Protein > > qryReader( new FASTA::Reader< Protein >( query_table ) );
 
   SequenceList< Protein > queries;
   progress.Activate( ProgressType::ReadQueryFile );
@@ -350,4 +354,15 @@ void protein_blast(DataFrame query_table,
   writer.WaitTillDone();
 
   Rcout << "\n";
+}
+
+
+void blast2(std::string query_table,
+            std::string db_table,
+            std::string output_file,
+            int maxAccepts = 1,
+            int maxRejects =  16,
+            double minIdentity = 0.75) 
+{
+
 }

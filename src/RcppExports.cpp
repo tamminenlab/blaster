@@ -6,12 +6,12 @@
 using namespace Rcpp;
 
 // dna_blast
-void dna_blast(DataFrame query_table, DataFrame db_table, std::string output_file, int maxAccepts, int maxRejects, double minIdentity, std::string strand);
+void dna_blast(std::string query_table, std::string db_table, std::string output_file, int maxAccepts, int maxRejects, double minIdentity, std::string strand);
 RcppExport SEXP _blaster_dna_blast(SEXP query_tableSEXP, SEXP db_tableSEXP, SEXP output_fileSEXP, SEXP maxAcceptsSEXP, SEXP maxRejectsSEXP, SEXP minIdentitySEXP, SEXP strandSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< DataFrame >::type query_table(query_tableSEXP);
-    Rcpp::traits::input_parameter< DataFrame >::type db_table(db_tableSEXP);
+    Rcpp::traits::input_parameter< std::string >::type query_table(query_tableSEXP);
+    Rcpp::traits::input_parameter< std::string >::type db_table(db_tableSEXP);
     Rcpp::traits::input_parameter< std::string >::type output_file(output_fileSEXP);
     Rcpp::traits::input_parameter< int >::type maxAccepts(maxAcceptsSEXP);
     Rcpp::traits::input_parameter< int >::type maxRejects(maxRejectsSEXP);
@@ -22,12 +22,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // protein_blast
-void protein_blast(DataFrame query_table, DataFrame db_table, std::string output_file, int maxAccepts, int maxRejects, double minIdentity);
+void protein_blast(std::string query_table, std::string db_table, std::string output_file, int maxAccepts, int maxRejects, double minIdentity);
 RcppExport SEXP _blaster_protein_blast(SEXP query_tableSEXP, SEXP db_tableSEXP, SEXP output_fileSEXP, SEXP maxAcceptsSEXP, SEXP maxRejectsSEXP, SEXP minIdentitySEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< DataFrame >::type query_table(query_tableSEXP);
-    Rcpp::traits::input_parameter< DataFrame >::type db_table(db_tableSEXP);
+    Rcpp::traits::input_parameter< std::string >::type query_table(query_tableSEXP);
+    Rcpp::traits::input_parameter< std::string >::type db_table(db_tableSEXP);
     Rcpp::traits::input_parameter< std::string >::type output_file(output_fileSEXP);
     Rcpp::traits::input_parameter< int >::type maxAccepts(maxAcceptsSEXP);
     Rcpp::traits::input_parameter< int >::type maxRejects(maxRejectsSEXP);

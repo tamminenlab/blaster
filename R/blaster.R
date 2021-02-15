@@ -66,11 +66,19 @@ blast <- function(query,
     if (!output_to_file)
         on.exit(if (exists(tmp_file)) file.remove(tmp_file), add = TRUE)
 
-    if (is.character(query))
-        query <- read_fasta(filename = query, alphabet = alphabet)
-    
-    if (is.character(db))
-        db <- read_fasta(filename = db, alphabet = alphabet)
+    if (is.data.frame(query)) {
+        query_file <- tempfile(fileext = ".fasta")
+        write(with(query, paste0(">", Id, "\n", Seq)), query_file)
+        query <- query_file
+        on.exit(if (exists(query)) file.remove(query), add = TRUE)
+    }
+
+    if (is.data.frame(db)) {
+        db_file <- tempfile(fileext = ".fasta")
+        write(with(db, paste0(">", Id, "\n", Seq)), db_file)
+        db <- db_file
+        on.exit(if (exists(db)) file.remove(db), add = TRUE)
+    }
 
     if (alphabet == "nucleotide")
         dna_blast(
