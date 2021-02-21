@@ -98,7 +98,7 @@ blast <- function(query,
             maxRejects,
             minIdentity)
     else
-        stop("Supported alphabet include nt and protein.")
+        stop("Supported alphabet include 'nucleotide' and 'protein'.")
 
     if (output_to_file)
         tmp_file
