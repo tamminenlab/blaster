@@ -108,15 +108,15 @@ void Database< A >::Initialize( const SequenceList< A >& sequences ) {
   }
 
   // Calculate indices
-  mSequenceIdsOffsetByKmer.reserve( mMaxUniqueKmers );
+  mSequenceIdsOffsetByKmer.resize( mMaxUniqueKmers );
   for( size_t i = 0; i < mMaxUniqueKmers; i++ ) {
     mSequenceIdsOffsetByKmer[ i ] =
       i > 0 ? mSequenceIdsOffsetByKmer[ i - 1 ] + uniqueCount[ i - 1 ] : 0;
   }
 
   // Populate DB
-  mSequenceIds.reserve( totalUniqueEntries );
-  mKmers.reserve( totalEntries );
+  mSequenceIds.resize( totalUniqueEntries );
+  mKmers.resize( totalEntries );
 
   // Reset to 0
   mSequenceIdsCountByKmer = std::vector< size_t >( mMaxUniqueKmers );
