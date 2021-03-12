@@ -2,7 +2,6 @@
   <!-- badges: start -->
   [![R-CMD-check](https://github.com/manutamminen/blaster/workflows/R-CMD-check/badge.svg)](https://github.com/manutamminen/blaster/actions)
   [![CRAN status](https://www.r-pkg.org/badges/version/blaster)](https://CRAN.R-project.org/package=blaster)
-  [![Codecov test coverage](https://codecov.io/gh/manutamminen/blaster/branch/main/graph/badge.svg)](https://codecov.io/gh/manutamminen/blaster?branch=main)
   <!-- badges: end -->
 
 # Blaster
