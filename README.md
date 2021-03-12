@@ -1,11 +1,21 @@
-# Blaster - a native R implementation of an efficient BLAST-like algorithm
+
+  <!-- badges: start -->
+  [![R-CMD-check](https://github.com/manutamminen/blaster/workflows/R-CMD-check/badge.svg)](https://github.com/manutamminen/blaster/actions)
+  [![CRAN status](https://www.r-pkg.org/badges/version/blaster)](https://CRAN.R-project.org/package=blaster)
+  [![Codecov test coverage](https://codecov.io/gh/manutamminen/blaster/branch/main/graph/badge.svg)](https://codecov.io/gh/manutamminen/blaster?branch=main)
+  <!-- badges: end -->
+
+# Blaster
 
 Blaster implements an efficient BLAST-like sequence comparison algorithm, written in C++11 and using native R datatypes. Blaster is light-weight, fast and dependency-free. The code base of Blaster is adapted from [nsearch](https://github.com/stevschmid/nsearch).
 
 ## Installation
 
 ```R
-# install.packages("devtools")
+# Install release version from CRAN
+install.packages("blaster")
+
+# Install development version from GitHub
 devtools::install_github("manutamminen/blaster")
 ```
 

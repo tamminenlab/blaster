@@ -25,3 +25,5 @@ LinkingTo: Rcpp
 SystemRequirements: C++14
 RoxygenNote: 7.1.1
 URL: https://github.com/manutamminen/blaster
+Suggests: 
+    covr

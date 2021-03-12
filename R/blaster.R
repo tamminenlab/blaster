@@ -1,10 +1,9 @@
 #' Blaster
 #' 
-#' Blaster implements an efficient BLAST-like sequence
-#' comparison algorithm using native R datatypes.
+#' Blaster implements an efficient BLAST-like sequence comparison algorithm.
 #' 
 #' @docType package
-#' @author Manu Tamminen <mavatam.@utu.fi>, Steven Schmid
+#' @author Manu Tamminen <mavatam.@utu.fi>, Timothy Julian <tim.julian@eawag.ch>, Steven Schmid <stevschmid@gmail.com>
 #' @import Rcpp 
 #' @importFrom Rcpp evalCpp
 #' @useDynLib blaster
