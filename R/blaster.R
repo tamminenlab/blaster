@@ -63,7 +63,7 @@ blast <- function(query,
 {
     tmp_file <- tempfile(fileext = ".csv")
     if (!output_to_file)
-        on.exit(if (exists(tmp_file)) file.remove(tmp_file), add = TRUE)
+        on.exit(if (exists("tmp_file")) file.remove(tmp_file), add = TRUE)
 
     if (is.data.frame(query)) {
         query_file <- tempfile(fileext = ".fasta")
