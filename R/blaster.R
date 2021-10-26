@@ -131,7 +131,7 @@ blast <- function(query,
 #' @param filter An optional string specifying a sequence motif for sequence filtering.
 #'               Only keeps those sequences containing this motif. Also splits the
 #'               matched sequences and provides the split parts in two additional columns.
-#' @param alphabet A string specifying the query and database alphabet: 
+#' @param alphabet A string specifying the query and database alphabet:
 #'                 'nucleotide' or 'protein'. Defaults to 'nucleotide'.
 #' @param non_standard_chars A string specifying instructions for handling non-standard
 #'                           nucleotide or amino acid characters. Options include 'remove',
@@ -140,7 +140,7 @@ blast <- function(query,
 #'         If 'filter' is specified, the split sequences are stored in additional columns
 #'         Part1 and Part2.
 #' @examples
-#' 
+#'
 #' query <- system.file("extdata", "query.fasta", package = "blaster")
 #'
 #' query <- read_fasta(filename = query)
