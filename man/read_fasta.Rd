@@ -22,7 +22,7 @@ matched sequences and provides the split parts in two additional columns.}
 nucleotide or amino acid characters. Options include 'remove',
 'ignore' or throw an 'error'. Defaults to 'error'.}
 
-\item{alphabet}{A string specifying the query and database alphabet: 
+\item{alphabet}{A string specifying the query and database alphabet:
 'nucleotide' or 'protein'. Defaults to 'nucleotide'.}
 }
 \value{

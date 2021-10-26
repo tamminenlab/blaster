@@ -5,6 +5,37 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
+// read_dna_fasta
+DataFrame read_dna_fasta(std::string filename, std::string filter, std::string non_standard_chars);
+RcppExport SEXP _blaster_read_dna_fasta(SEXP filenameSEXP, SEXP filterSEXP, SEXP non_standard_charsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
+    Rcpp::traits::input_parameter< std::string >::type filter(filterSEXP);
+    Rcpp::traits::input_parameter< std::string >::type non_standard_chars(non_standard_charsSEXP);
+    rcpp_result_gen = Rcpp::wrap(read_dna_fasta(filename, filter, non_standard_chars));
+    return rcpp_result_gen;
+END_RCPP
+}
+// read_protein_fasta
+DataFrame read_protein_fasta(std::string filename, std::string filter, std::string non_standard_chars);
+RcppExport SEXP _blaster_read_protein_fasta(SEXP filenameSEXP, SEXP filterSEXP, SEXP non_standard_charsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
+    Rcpp::traits::input_parameter< std::string >::type filter(filterSEXP);
+    Rcpp::traits::input_parameter< std::string >::type non_standard_chars(non_standard_charsSEXP);
+    rcpp_result_gen = Rcpp::wrap(read_protein_fasta(filename, filter, non_standard_chars));
+    return rcpp_result_gen;
+END_RCPP
+}
 // dna_blast
 void dna_blast(std::string query_table, std::string db_table, std::string output_file, int maxAccepts, int maxRejects, double minIdentity, std::string strand);
 RcppExport SEXP _blaster_dna_blast(SEXP query_tableSEXP, SEXP db_tableSEXP, SEXP output_fileSEXP, SEXP maxAcceptsSEXP, SEXP maxRejectsSEXP, SEXP minIdentitySEXP, SEXP strandSEXP) {
@@ -36,38 +67,12 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// read_dna_fasta
-DataFrame read_dna_fasta(std::string filename, std::string filter, std::string non_standard_chars);
-RcppExport SEXP _blaster_read_dna_fasta(SEXP filenameSEXP, SEXP filterSEXP, SEXP non_standard_charsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
-    Rcpp::traits::input_parameter< std::string >::type filter(filterSEXP);
-    Rcpp::traits::input_parameter< std::string >::type non_standard_chars(non_standard_charsSEXP);
-    rcpp_result_gen = Rcpp::wrap(read_dna_fasta(filename, filter, non_standard_chars));
-    return rcpp_result_gen;
-END_RCPP
-}
-// read_protein_fasta
-DataFrame read_protein_fasta(std::string filename, std::string filter, std::string non_standard_chars);
-RcppExport SEXP _blaster_read_protein_fasta(SEXP filenameSEXP, SEXP filterSEXP, SEXP non_standard_charsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
-    Rcpp::traits::input_parameter< std::string >::type filter(filterSEXP);
-    Rcpp::traits::input_parameter< std::string >::type non_standard_chars(non_standard_charsSEXP);
-    rcpp_result_gen = Rcpp::wrap(read_protein_fasta(filename, filter, non_standard_chars));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_blaster_dna_blast", (DL_FUNC) &_blaster_dna_blast, 7},
-    {"_blaster_protein_blast", (DL_FUNC) &_blaster_protein_blast, 6},
     {"_blaster_read_dna_fasta", (DL_FUNC) &_blaster_read_dna_fasta, 3},
     {"_blaster_read_protein_fasta", (DL_FUNC) &_blaster_read_protein_fasta, 3},
+    {"_blaster_dna_blast", (DL_FUNC) &_blaster_dna_blast, 7},
+    {"_blaster_protein_blast", (DL_FUNC) &_blaster_protein_blast, 6},
     {NULL, NULL, 0}
 };
 

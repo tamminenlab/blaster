@@ -127,6 +127,7 @@ std::string DFtoSeq(DataFrame seq_table)
 }
 
 
+// [[Rcpp::export]]
 void dna_blast(std::string query_table,
                std::string db_table,
                std::string output_file,

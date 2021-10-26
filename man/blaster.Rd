@@ -5,9 +5,8 @@
 \alias{blaster}
 \title{Blaster}
 \description{
-Blaster implements an efficient BLAST-like sequence
-comparison algorithm using native R datatypes.
+Blaster implements an efficient BLAST-like sequence comparison algorithm.
 }
 \author{
-Manu Tamminen <mavatam.@utu.fi>, Steven Schmid
+Manu Tamminen <mavatam.@utu.fi>, Timothy Julian <tim.julian@eawag.ch>, Steven Schmid <stevschmid@gmail.com>
 }

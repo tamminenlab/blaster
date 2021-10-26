@@ -26,10 +26,10 @@ or a string specifying the FASTA file of the database sequences.}
 
 \item{maxRejects}{A number specifying the maximum rejected hits.}
 
-\item{minIdentity}{A number specifying the minimal accepted sequence 
+\item{minIdentity}{A number specifying the minimal accepted sequence
 similarity between the query and hit sequences.}
 
-\item{alphabet}{A string specifying the query and database alphabet: 
+\item{alphabet}{A string specifying the query and database alphabet:
 'nucleotide' or 'protein'. Defaults to 'nucleotide'.}
 
 \item{strand}{A string specifying the strand to search: 'plus', 'minus' or
@@ -46,7 +46,7 @@ A dataframe or a string. A dataframe is returned by default, containing
         the BLAST output in columns QueryId, TargetId, QueryMatchStart, QueryMatchEnd,
         TargetMatchStart, TargetMatchEnd, QueryMatchSeq, TargetMatchSeq, NumColumns,
         NumMatches, NumMismatches, NumGaps, Identity and Alignment. A string is returned
-        if 'output_to_file' is set to TRUE. This string points to the temporary file
+        if 'output_to_file' is set to TRUE. This string points to the file
         containing the output table.
 }
 \description{
