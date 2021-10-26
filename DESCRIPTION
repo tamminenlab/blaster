@@ -2,7 +2,7 @@ Package: blaster
 Type: Package
 Title: Native R Implementation of an Efficient BLAST-Like Algorithm
 Version: 1.0.4
-Date: 2021-03-07
+Date: 2021-10-26
 Authors@R: c(person("Manu", "Tamminen",
              email = "mavatam@utu.fi",
              role = c("aut", "cre"),
@@ -11,11 +11,15 @@ Authors@R: c(person("Manu", "Tamminen",
              email = "tim.julian@eawag.ch",
              role = c("aut"),
              comment = c(ORCID = "0000-0003-1000-0306")),
+             person("Aditya", "Jeevennavar",
+             email="aditya.a.jeevannavar@utu.fi",
+             role = c("aut"),
+             comment = c(ORCID = "0000-0002-0737-7316")),
              person("Steven", "Schmid",
              email="stevschmid@gmail.com",
              role = c("aut")))
 Maintainer: Manu Tamminen <mavatam@utu.fi>
-Description: Implementation of an efficient BLAST-like sequence 
+Description: Implementation of an efficient BLAST-like sequence
              comparison algorithm, written in C++11 and using
              native R datatypes. Blaster is based on 'nsearch' -
              Schmid et al 2018; <doi:10.1101/399782>.
@@ -25,5 +29,5 @@ LinkingTo: Rcpp
 SystemRequirements: C++14
 RoxygenNote: 7.1.1
 URL: https://github.com/manutamminen/blaster
-Suggests: 
+Suggests:
     covr
