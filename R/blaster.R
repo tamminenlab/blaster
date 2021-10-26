@@ -34,7 +34,7 @@ NULL
 #'         the BLAST output in columns QueryId, TargetId, QueryMatchStart, QueryMatchEnd,
 #'         TargetMatchStart, TargetMatchEnd, QueryMatchSeq, TargetMatchSeq, NumColumns,
 #'         NumMatches, NumMismatches, NumGaps, Identity and Alignment. A string is returned
-#'         if 'output_to_file' is set to TRUE. This string points to the temporary file
+#'         if 'output_to_file' is set to TRUE. This string points to the file
 #'         containing the output table. 
 #' @examples
 #' 
@@ -62,8 +62,7 @@ blast <- function(query,
                   output_to_file = FALSE)
 {
     tmp_file <- tempfile(fileext = ".csv")
-    if (!output_to_file)
-        on.exit(if (exists(tmp_file)) file.remove(tmp_file), add = TRUE)
+    on.exit(if (exists("tmp_file")) file.remove(tmp_file), add = TRUE)
 
     if (is.data.frame(query)) {
         query_file <- tempfile(fileext = ".fasta")
@@ -99,10 +98,24 @@ blast <- function(query,
     else
         stop("Supported alphabet include 'nucleotide' and 'protein'.")
 
-    if (output_to_file)
-        tmp_file
+    if (output_to_file) {
+        csv_file <- read.csv(tmp_file,
+                             header = FALSE,
+                             col.names = c(
+                                 "QueryId", "TargetId", "QueryMatchStart",
+                                 "QueryMatchEnd", "TargetMatchStart",
+                                 "TargetMatchEnd", "QueryMatchSeq",
+                                 "TargetMatchSeq", "NumColumns", "NumMatches",
+                                 "NumMismatches", "NumGaps", "Identity", "Alignment"))
+        filename <- paste0("blast_results-", Sys.time(), ".csv")
+        write.csv(csv_file,
+                  filename,
+                  row.names = FALSE)
+        paste0(getwd(), "/", filename)
+    }
     else
         read.csv(tmp_file,
+                 header = FALSE,
                  col.names = c(
                      "QueryId", "TargetId", "QueryMatchStart",
                      "QueryMatchEnd", "TargetMatchStart",
