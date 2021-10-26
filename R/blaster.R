@@ -1,10 +1,10 @@
 #' Blaster
-#' 
+#'
 #' Blaster implements an efficient BLAST-like sequence comparison algorithm.
-#' 
+#'
 #' @docType package
 #' @author Manu Tamminen <mavatam.@utu.fi>, Timothy Julian <tim.julian@eawag.ch>, Steven Schmid <stevschmid@gmail.com>
-#' @import Rcpp 
+#' @import Rcpp
 #' @importFrom Rcpp evalCpp
 #' @useDynLib blaster
 #' @name blaster
@@ -14,14 +14,14 @@ NULL
 #' Runs BLAST sequence comparison algorithm.
 #'
 #' @param query A dataframe of the query sequences (containing Id and Seq columns)
-#'              or a string specifying the FASTA file of the query sequences. 
+#'              or a string specifying the FASTA file of the query sequences.
 #' @param db A dataframe of the database sequences (containing Id and Seq columns)
 #'           or a string specifying the FASTA file of the database sequences.
 #' @param maxAccepts A number specifying the maximum accepted hits.
 #' @param maxRejects A number specifying the maximum rejected hits.
-#' @param minIdentity A number specifying the minimal accepted sequence 
+#' @param minIdentity A number specifying the minimal accepted sequence
 #'                    similarity between the query and hit sequences.
-#' @param alphabet A string specifying the query and database alphabet: 
+#' @param alphabet A string specifying the query and database alphabet:
 #'                 'nucleotide' or 'protein'. Defaults to 'nucleotide'.
 #' @param strand A string specifying the strand to search: 'plus', 'minus' or
 #'               'both'. Defaults to 'both'. Only affects nucleotide searches.
@@ -35,9 +35,9 @@ NULL
 #'         TargetMatchStart, TargetMatchEnd, QueryMatchSeq, TargetMatchSeq, NumColumns,
 #'         NumMatches, NumMismatches, NumGaps, Identity and Alignment. A string is returned
 #'         if 'output_to_file' is set to TRUE. This string points to the file
-#'         containing the output table. 
+#'         containing the output table.
 #' @examples
-#' 
+#'
 #' query <- system.file("extdata", "query.fasta", package = "blaster")
 #' db <- system.file("extdata", "db.fasta", package = "blaster")
 #'
@@ -46,10 +46,10 @@ NULL
 #' query <- read_fasta(filename = query)
 #' db <- read_fasta(filename = db)
 #' blast_table <- blast(query = query, db = db)
-#' 
+#'
 #' prot <- system.file("extdata", "prot.fasta", package = "blaster")
 #' prot_blast_table <- blast(query = prot, db = prot, alphabet = "protein")
-#' 
+#'
 #' @export
 #' @importFrom utils read.csv
 blast <- function(query,
@@ -57,7 +57,7 @@ blast <- function(query,
                   maxAccepts = 1,
                   maxRejects = 16,
                   minIdentity = 0.75,
-                  alphabet = "nucleotide", 
+                  alphabet = "nucleotide",
                   strand = "both",
                   output_to_file = FALSE)
 {
@@ -68,14 +68,14 @@ blast <- function(query,
         query_file <- tempfile(fileext = ".fasta")
         write(with(query, paste0(">", Id, "\n", Seq)), query_file)
         query <- query_file
-        on.exit(if (exists(query)) file.remove(query), add = TRUE)
+        on.exit(if (exists("query")) file.remove(query), add = TRUE)
     }
 
     if (is.data.frame(db)) {
         db_file <- tempfile(fileext = ".fasta")
         write(with(db, paste0(">", Id, "\n", Seq)), db_file)
         db <- db_file
-        on.exit(if (exists(db)) file.remove(db), add = TRUE)
+        on.exit(if (exists("db")) file.remove(db), add = TRUE)
     }
 
     if (alphabet == "nucleotide")
