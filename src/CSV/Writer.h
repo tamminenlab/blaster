@@ -22,13 +22,6 @@ public:
     // Output with fixed precision (sticky)
     out << std::setiosflags( std::ios::fixed );
 
-    // Header
-    static bool wroteHeader = false;
-    if( !wroteHeader ) {
-      out << "QueryId,TargetId,QueryMatchStart,QueryMatchEnd,TargetMatchStart,TargetMatchEnd,QueryMatchSeq,TargetMatchSeq,NumColumns,NumMatches,NumMismatches,NumGaps,Identity,Alignment" << std::endl;
-      wroteHeader = true;
-    }
-
     // Each hit gets a line
     for( const auto& hit : hits ) {
       // Compute stuff
