@@ -52,6 +52,7 @@ NULL
 #'
 #' @export
 #' @importFrom utils read.csv
+#' @importFrom utils write.csv
 blast <- function(query,
                   db,
                   maxAccepts = 1,
