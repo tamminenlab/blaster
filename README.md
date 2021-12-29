@@ -10,13 +10,24 @@ Blaster implements an efficient BLAST-like sequence comparison algorithm, writte
 
 ## Installation
 
-```R
-# Install release version from CRAN
-install.packages("blaster")
+CRAN
 
-# Install development version from GitHub
+```R
+install.packages("blaster")
+```
+
+Conda
+
+```sh
+conda install -c conda-forge r-blaster 
+```
+
+Development version from GitHub
+
+```R
 devtools::install_github("manutamminen/blaster")
 ```
+
 
 ## Examples
 
