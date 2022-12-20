@@ -6,7 +6,7 @@
 
 # Blaster
 
-Blaster implements an efficient BLAST-like sequence comparison algorithm, written in C++11 and using native R datatypes. Blaster is light-weight, fast and dependency-free. The code base of Blaster is adapted from [nsearch](https://github.com/stevschmid/nsearch). A similar implementation of [nsearch](https://github.com/stevschmid/nsearch) for Python is available at [npysearch](https://github.com/tamminenlab/npysearch).
+Blaster implements an efficient BLAST-like sequence comparison algorithm, written in C++11 and using native R datatypes. Blaster is light-weight, fast and dependency-free. The code base of Blaster is adapted from [nsearch](https://github.com/stevschmid/nsearch). An implementation of [nsearch](https://github.com/stevschmid/nsearch) for Python is available at [npysearch](https://github.com/tamminenlab/npysearch).
 
 ## Installation
 
