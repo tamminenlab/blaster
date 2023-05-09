@@ -57,3 +57,5 @@ query <- read_fasta("query.fasta", "GAGACTT")
 - linux\_64, r-base >= 4.0, r-cpp >= 1.0.5
 - osx\_64, r-base >= 4.0, r-cpp >= 1.0.5
 - win\_64, r-base >= 4.0, r-cpp >= 1.0.5
+
+Details available at https://anaconda.org/conda-forge/r-blaster/files.
