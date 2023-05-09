@@ -10,12 +10,6 @@ Blaster implements an efficient BLAST-like sequence comparison algorithm, writte
 
 ## Installation
 
-### From [CRAN](https://CRAN.R-project.org/package=blaster)
-
-```R
-install.packages("blaster")
-```
-
 ### From [Conda](https://anaconda.org/conda-forge/r-blaster)
 
 ```sh
@@ -58,3 +52,10 @@ query <- read_fasta("query.fasta", "GAGACTT")
 
 ```
 
+## Tested on
+
+- linux\_64\_r\_base4.1
+- linux\_64\_r\_base4.2
+- osx\_64\_r\_base4.1
+- osx\_64\_r\_base4.2
+- win\_64
