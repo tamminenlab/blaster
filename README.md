@@ -54,8 +54,6 @@ query <- read_fasta("query.fasta", "GAGACTT")
 
 ## Tested on
 
-- linux\_64\_r\_base4.1
-- linux\_64\_r\_base4.2
-- osx\_64\_r\_base4.1
-- osx\_64\_r\_base4.2
-- win\_64
+- linux\_64, r-base >= 4.0, r-cpp >= 1.0.5
+- osx\_64, r-base >= 4.0, r-cpp >= 1.0.5
+- win\_64, r-base >= 4.0, r-cpp >= 1.0.5
