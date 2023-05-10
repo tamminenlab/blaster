@@ -29,7 +29,7 @@ static const std::map< FileFormat, StringList > FileFormatEndings = {
   { FileFormat::CSV, { "csv" } },
 };
 
-static FileFormat InferFileFormat( const std::string& filepath, const FileFormat defaultFormat ) {
+static inline FileFormat InferFileFormat( const std::string& filepath, const FileFormat defaultFormat ) {
   auto pos = filepath.find_last_of( "." );
   if( pos == std::string::npos )
     return defaultFormat;

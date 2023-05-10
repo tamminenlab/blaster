@@ -1,6 +1,6 @@
 
   <!-- badges: start -->
-  [![R-CMD-check](https://github.com/manutamminen/blaster/workflows/R-CMD-check/badge.svg)](https://github.com/manutamminen/blaster/actions)
+  [![R-CMD-check](https://github.com/tamminenlab/blaster/workflows/R-CMD-check/badge.svg)](https://github.com/tamminenlab/blaster/actions)
   [![CRAN status](https://www.r-pkg.org/badges/version/blaster)](https://CRAN.R-project.org/package=blaster)
   <!-- badges: end -->
 
@@ -19,7 +19,7 @@ conda install -c conda-forge r-blaster
 ### Development version from GitHub
 
 ```R
-devtools::install_github("manutamminen/blaster")
+devtools::install_github("tamminenlab/blaster")
 ```
 
 
