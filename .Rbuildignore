@@ -1,0 +1,9 @@
+^\.git$
+^\.gitignore$
+^\.github$
+^\.claude$
+^\.Rproj\.user$
+^.*\.Rproj$
+^cran-comments\.md$
+^\.Rcheck$
+^.*\.tar\.gz$

@@ -1,8 +1,8 @@
 Package: blaster
 Type: Package
 Title: Native R Implementation of an Efficient BLAST-Like Algorithm
-Version: 1.0.6
-Date: 2023-05-10
+Version: 1.0.8
+Date: 2026-04-21
 Authors@R: c(person("Manu", "Tamminen",
              email = "mavatam@utu.fi",
              role = c("aut", "cre"),
@@ -26,6 +26,5 @@ Description: Implementation of an efficient BLAST-like sequence
 License: BSD_3_clause + file LICENSE
 Imports: Rcpp (>= 1.0.5)
 LinkingTo: Rcpp
-SystemRequirements: C++
 RoxygenNote: 7.1.1
 URL: https://github.com/tamminenlab/blaster
