@@ -1,6 +1,6 @@
 
   <!-- badges: start -->
-  [![R-CMD-check](https://github.com/tamminenlab/blaster/workflows/R-CMD-check/badge.svg)](https://github.com/tamminenlab/blaster/actions)
+  [![R-CMD-check](https://github.com/tamminenlab/blaster/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tamminenlab/blaster/actions/workflows/R-CMD-check.yaml)
   [![CRAN status](https://www.r-pkg.org/badges/version/blaster)](https://CRAN.R-project.org/package=blaster)
   <!-- badges: end -->
 
