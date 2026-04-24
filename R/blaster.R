@@ -108,11 +108,11 @@ blast <- function(query,
                                  "TargetMatchEnd", "QueryMatchSeq",
                                  "TargetMatchSeq", "NumColumns", "NumMatches",
                                  "NumMismatches", "NumGaps", "Identity", "Alignment"))
-        filename <- paste0("blast_results-", Sys.time(), ".csv")
+        filename <- tempfile(pattern = "blast_results-", fileext = ".csv")
         write.csv(csv_file,
                   filename,
                   row.names = FALSE)
-        paste0(getwd(), "/", filename)
+        filename
     }
     else
         read.csv(tmp_file,

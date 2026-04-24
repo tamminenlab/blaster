@@ -1,8 +1,8 @@
 Package: blaster
 Type: Package
 Title: Native R Implementation of an Efficient BLAST-Like Algorithm
-Version: 1.0.8
-Date: 2026-04-21
+Version: 1.0.9
+Date: 2026-04-24
 Authors@R: c(person("Manu", "Tamminen",
              email = "mavatam@utu.fi",
              role = c("aut", "cre"),
